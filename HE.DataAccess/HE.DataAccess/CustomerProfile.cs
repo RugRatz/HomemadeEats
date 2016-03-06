@@ -7,7 +7,6 @@ namespace HE.DataAccess
     using System.Security.Claims;
     using Microsoft.AspNet.Identity;
     using System.Threading.Tasks;
-
     [Table("CustomerProfile")]
     public class CustomerProfile : IdentityUser
     {
@@ -80,7 +79,12 @@ namespace HE.DataAccess
             // Add custom user claims here
             return userIdentity;
         }
-
+        
+        //Attempted to implement FindAsync but not sure how to implement this yet
+        //public async Task<CustomerProfile> FindAsync(string id)
+        //{
+        //    return CustomerProfile.
+        //}
         //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         //public virtual ICollection<CustomerLogin> CustomerLogins { get; set; }
 

@@ -12,8 +12,8 @@ namespace HE.DataAccess
         }
 
         public virtual DbSet<CustomerContactInfo> CustomerContactInfoes { get; set; }
-        public virtual DbSet<CustomerLogin> CustomerLogins { get; set; }
-        public virtual DbSet<CustomerProfile> CustomerProfiles { get; set; }
+        //public virtual DbSet<CustomerLogin> CustomerLogins { get; set; }
+        //public virtual DbSet<CustomerProfile> CustomerProfiles { get; set; }
         public virtual DbSet<Grocery> Groceries { get; set; }
         public virtual DbSet<GroceryGroup> GroceryGroups { get; set; }
         public virtual DbSet<GroceryGroupIngredient> GroceryGroupIngredients { get; set; }
@@ -23,8 +23,8 @@ namespace HE.DataAccess
         public virtual DbSet<IngredientNote> IngredientNotes { get; set; }
         public virtual DbSet<Instruction> Instructions { get; set; }
         public virtual DbSet<MealType> MealTypes { get; set; }
-        public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<UserClaim> UserClaims { get; set; }
+        //public virtual DbSet<Role> Roles { get; set; }
+        //public virtual DbSet<UserClaim> UserClaims { get; set; }
         public virtual DbSet<vCustomer> vCustomers { get; set; }
         public virtual DbSet<vGrocery> vGroceries { get; set; }
         public virtual DbSet<vHomemadeItem> vHomemadeItems { get; set; }
@@ -76,5 +76,13 @@ namespace HE.DataAccess
         {
             return new HE_DbContext();
         }
+
+        //public System.Data.Entity.DbSet<HE.DataAccess.CustomerLogin> IdentityUserLogins { get; set; }
+
+        //public System.Data.Entity.DbSet<HE.DataAccess.CustomerProfile> CustomerProfiles { get; set; }
+
+        //public System.Data.Entity.DbSet<HE.DataAccess.Role> IdentityRoles { get; set; }
+
+        //public System.Data.Entity.DbSet<HE.DataAccess.UserClaim> IdentityUserClaims { get; set; }
     }
 }

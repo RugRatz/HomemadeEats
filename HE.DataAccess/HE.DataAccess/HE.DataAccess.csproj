@@ -67,6 +67,7 @@
     <Compile Include="GroceryGroup.cs" />
     <Compile Include="GroceryGroupIngredient.cs" />
     <Compile Include="HE_DbContext.cs" />
+    <Compile Include="HE_DbContextInitializer.cs" />
     <Compile Include="HomemadeItem.cs" />
     <Compile Include="Ingredient.cs" />
     <Compile Include="IngredientCategory.cs" />
