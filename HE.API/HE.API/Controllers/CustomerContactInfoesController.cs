@@ -12,7 +12,7 @@ namespace HE.API.Controllers
 {
     public class CustomerContactInfoesController : ApiController
     {
-        private HE_DbContext db = new HE_DbContext();
+        private HE_IdentityDbContext db = new HE_IdentityDbContext();
 
         // GET: api/CustomerContactInfoes
         public IQueryable<CustomerContactInfo> GetCustomerContactInfoes()

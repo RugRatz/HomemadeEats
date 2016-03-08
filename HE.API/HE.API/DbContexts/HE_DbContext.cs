@@ -8,7 +8,7 @@ namespace HE.API.DbContexts
         public HE_DbContext()
             : base("name=HE_DbContext")
         {
-            //Database.SetInitializer(new HE_DbContextInitializer());
+            Database.SetInitializer(new HE_DbContextInitializer());
         }
 
         public virtual DbSet<CustomerContactInfo> CustomerContactInfoes { get; set; }

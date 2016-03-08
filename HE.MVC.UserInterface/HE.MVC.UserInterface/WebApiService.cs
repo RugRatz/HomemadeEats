@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
+using System;
 
 namespace HE.MVC.UserInterface
 {
@@ -28,7 +29,7 @@ namespace HE.MVC.UserInterface
         {
             using (var client = new HttpClient())
             {
-                var result = await client.PostAsync(BuildActionUri("/Token"), new FormUrlEncodedContent(new List<KeyValuePair<string, string>>
+                var result = await client.PostAsync(BuildActionUri("Token"), new FormUrlEncodedContent(new List<KeyValuePair<string, string>>
                 {
                     new KeyValuePair<string, string>("grant_type", "password"),
                     new KeyValuePair<string, string>("userName", userName), 
@@ -41,7 +42,8 @@ namespace HE.MVC.UserInterface
                     return JsonConvert.DeserializeObject<T>(json);
                 }
 
-                throw new ApiException(result.StatusCode, json);
+                //throw new ApiException(result.StatusCode, json);
+                throw new Exception(json);
             }
         }
 
@@ -105,7 +107,8 @@ namespace HE.MVC.UserInterface
                 }
 
                 string json = await result.Content.ReadAsStringAsync();
-                throw new ApiException(result.StatusCode, json);
+                //throw new ApiException(result.StatusCode, json);
+                throw new Exception(json);
             }
         }
 

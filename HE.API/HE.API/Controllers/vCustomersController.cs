@@ -9,7 +9,7 @@ namespace HE.API.Controllers
 {
     public class vCustomersController : ApiController
     {
-        private HE_DbContext db = new HE_DbContext();
+        private HE_IdentityDbContext db = new HE_IdentityDbContext();
 
         // GET: api/vCustomers
         public IQueryable<vCustomer> GetvCustomers()

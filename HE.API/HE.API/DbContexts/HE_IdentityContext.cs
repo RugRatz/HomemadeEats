@@ -3,6 +3,7 @@ namespace HE.API.DbContexts
     using Microsoft.AspNet.Identity.EntityFramework;
     using System.Data.Entity;
     using HE.API.Models;
+    using HE.Domain;
 
     public partial class HE_IdentityDbContext : IdentityDbContext<CustomerProfile>
     {
@@ -11,6 +12,23 @@ namespace HE.API.DbContexts
         {
             //Database.SetInitializer(new HE_DbContextInitializer());
         }
+        
+        public virtual DbSet<CustomerContactInfo> CustomerContactInfoes { get; set; }
+        public virtual DbSet<Grocery> Groceries { get; set; }
+        public virtual DbSet<GroceryGroup> GroceryGroups { get; set; }
+        public virtual DbSet<GroceryGroupIngredient> GroceryGroupIngredients { get; set; }
+        public virtual DbSet<HomemadeItem> HomemadeItems { get; set; }
+        public virtual DbSet<Ingredient> Ingredients { get; set; }
+        public virtual DbSet<IngredientCategory> IngredientCategories { get; set; }
+        public virtual DbSet<IngredientNote> IngredientNotes { get; set; }
+        public virtual DbSet<Instruction> Instructions { get; set; }
+        public virtual DbSet<MealType> MealTypes { get; set; }
+        //public virtual DbSet<vCustomer> vCustomers { get; set; }
+        //public virtual DbSet<vGrocery> vGroceries { get; set; }
+        //public virtual DbSet<vHomemadeItem> vHomemadeItems { get; set; }
+        //public virtual DbSet<vIngredient> vIngredients { get; set; }
+        //public virtual DbSet<vIngredientNote> vIngredientNotes { get; set; }
+        //public virtual DbSet<vRecipeInstruction> vRecipeInstructions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

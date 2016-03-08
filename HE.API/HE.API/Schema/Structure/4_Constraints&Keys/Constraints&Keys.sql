@@ -1,13 +1,13 @@
 USE HomemadeEats
 
-ALTER TABLE [dbo].[CustomerLogin]  
-	WITH CHECK ADD  
-	CONSTRAINT [FK_dbo.CustomerLogin_dbo.CustomerProfile_CustomerProfileID] 
-	FOREIGN KEY([CustomerProfileID])
-	REFERENCES [dbo].[CustomerProfile] ([CustomerProfileID])
-	ON DELETE CASCADE
-ALTER TABLE [dbo].[CustomerLogin] 
-	CHECK CONSTRAINT [FK_dbo.CustomerLogin_dbo.CustomerProfile_CustomerProfileID]
+--ALTER TABLE [dbo].[CustomerLogin]  
+--	WITH CHECK ADD  
+--	CONSTRAINT [FK_dbo.CustomerLogin_dbo.CustomerProfile_CustomerProfileID] 
+--	FOREIGN KEY([CustomerProfileID])
+--	REFERENCES [dbo].[CustomerProfile] ([CustomerProfileID])
+--	ON DELETE CASCADE
+--ALTER TABLE [dbo].[CustomerLogin] 
+--	CHECK CONSTRAINT [FK_dbo.CustomerLogin_dbo.CustomerProfile_CustomerProfileID]
 
 
 ALTER TABLE [dbo].[Grocery]  
@@ -90,29 +90,29 @@ ALTER TABLE [dbo].[Instruction]
 	CHECK CONSTRAINT [FK_dbo.Instruction_dbo.Ingredient_IngredientID]
 
 
-ALTER TABLE [dbo].[UserClaim]  
-	WITH CHECK ADD  
-	CONSTRAINT [FK_dbo.UserClaim_dbo.CustomerProfile_CustomerProfileID] 
-	FOREIGN KEY([CustomerProfileID])
-	REFERENCES [dbo].[CustomerProfile] ([CustomerProfileID])
-	ON DELETE CASCADE
-ALTER TABLE [dbo].[UserClaim] 
-	CHECK CONSTRAINT [FK_dbo.UserClaim_dbo.CustomerProfile_CustomerProfileID]
+--ALTER TABLE [dbo].[UserClaim]  
+--	WITH CHECK ADD  
+--	CONSTRAINT [FK_dbo.UserClaim_dbo.CustomerProfile_CustomerProfileID] 
+--	FOREIGN KEY([CustomerProfileID])
+--	REFERENCES [dbo].[CustomerProfile] ([CustomerProfileID])
+--	ON DELETE CASCADE
+--ALTER TABLE [dbo].[UserClaim] 
+--	CHECK CONSTRAINT [FK_dbo.UserClaim_dbo.CustomerProfile_CustomerProfileID]
 
 
-ALTER TABLE [dbo].[UserRole]  
-	WITH CHECK ADD  
-	CONSTRAINT [FK_dbo.UserRole_dbo.CustomerProfile_CustomerProfileID] 
-	FOREIGN KEY([CustomerProfileID])
-	REFERENCES [dbo].[CustomerProfile] ([CustomerProfileID])
-	ON DELETE CASCADE
-ALTER TABLE [dbo].[UserRole] 
-	CHECK CONSTRAINT [FK_dbo.UserRole_dbo.CustomerProfile_CustomerProfileID]
-ALTER TABLE [dbo].[UserRole]  
-	WITH CHECK ADD  
-	CONSTRAINT [FK_dbo.UserRole_dbo.Role_RoleId] 
-	FOREIGN KEY([RoleId])
-	REFERENCES [dbo].[Role] ([RoleID])
-	ON DELETE CASCADE
-ALTER TABLE [dbo].[UserRole] 
-	CHECK CONSTRAINT [FK_dbo.UserRole_dbo.Role_RoleId]
+--ALTER TABLE [dbo].[UserRole]  
+--	WITH CHECK ADD  
+--	CONSTRAINT [FK_dbo.UserRole_dbo.CustomerProfile_CustomerProfileID] 
+--	FOREIGN KEY([CustomerProfileID])
+--	REFERENCES [dbo].[CustomerProfile] ([CustomerProfileID])
+--	ON DELETE CASCADE
+--ALTER TABLE [dbo].[UserRole] 
+--	CHECK CONSTRAINT [FK_dbo.UserRole_dbo.CustomerProfile_CustomerProfileID]
+--ALTER TABLE [dbo].[UserRole]  
+--	WITH CHECK ADD  
+--	CONSTRAINT [FK_dbo.UserRole_dbo.Role_RoleId] 
+--	FOREIGN KEY([RoleId])
+--	REFERENCES [dbo].[Role] ([RoleID])
+--	ON DELETE CASCADE
+--ALTER TABLE [dbo].[UserRole] 
+--	CHECK CONSTRAINT [FK_dbo.UserRole_dbo.Role_RoleId]

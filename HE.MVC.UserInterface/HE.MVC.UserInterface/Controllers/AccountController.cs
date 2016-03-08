@@ -7,12 +7,18 @@ using Microsoft.Owin.Security;
 using HE.MVC.UserInterface.Models;
 using HE.API;
 using HE.MVC.UserInterface.Filters;
+using System.Diagnostics;
+using Microsoft.Owin.Security.DataHandler.Serializer;
+using System.Security.Claims;
+using System.Web.Security;
+using Microsoft.Owin.Security.DataHandler.Encoder;
+using HE.API.Models;
 
 namespace HE.MVC.UserInterface.Controllers
 {
     [Authorize]
-    [HandleApiError]
-    public class AccountController : HE_UI_ApiController
+    //[HandleApiError]
+    public class AccountController : Controller //HE_UI_ApiController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -66,7 +72,7 @@ namespace HE.MVC.UserInterface.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [HttpPost] //this is MANDATORY because on the API side, there is also another controller method named exactly like this
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(Models.RegisterViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -75,13 +81,19 @@ namespace HE.MVC.UserInterface.Controllers
 
             try
             {
+                var customer = new CustomerProfile { UserName = model.Email, Email = model.Email };
+
                 await WebApiService.Instance.PostAsync("api/Account/Register", model);
-                return View("Registered");
+
+                await SignInManager.SignInAsync(customer, isPersistent: false, rememberBrowser: false);
+
+                return RedirectToAction("Index", "Home");
             }
             catch (ApiException ex)
             {
                 //No 200 OK result, what went wrong?
-                HandleBadRequest(ex);
+                //HandleBadRequest(ex);
+                Debug.WriteLine(ex.Message);
 
                 if (!ModelState.IsValid)
                 {
@@ -91,8 +103,105 @@ namespace HE.MVC.UserInterface.Controllers
                 throw;
             }
         }
-        
-        
+
+        //
+        // GET: /Account/Login
+        [AllowAnonymous]
+        public ActionResult Login(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+
+        //
+        // POST: /Account/Login
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            #region MVC original code
+            //// This doesn't count login failures towards account lockout
+            //// To enable password failures to trigger account lockout, change to shouldLockout: true
+            //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            //switch (result)
+            //{
+            //    case SignInStatus.Success:
+            //        return RedirectToLocal(returnUrl);
+            //    case SignInStatus.LockedOut:
+            //        return View("Lockout");
+            //    case SignInStatus.RequiresVerification:
+            //        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+            //    case SignInStatus.Failure:
+            //    default:
+            //        ModelState.AddModelError("", "Invalid login attempt.");
+            //        return View(model);
+            //}
+            #endregion
+            try
+            {
+                var result = await WebApiService.Instance.AuthenticateAsync<SignInResult>(model.Email, model.Password);
+
+                //Let's keep the user authenticated in the MVC webapp.
+                //By using the AccessToken, we can use User.Identity.Name in the MVC controllers to make API calls.
+                FormsAuthentication.SetAuthCookie(result.AccessToken, model.RememberMe);
+
+                //Create an AuthenticationTicket to generate a cookie used to authenticate against Web API.
+                //But before we can do that, we need a ClaimsIdentity that can be authenticated in Web API.
+                var claims = new[]
+                {
+                    new Claim(ClaimTypes.Name, result.UserName), //Name is the default name claim type, and UserName is the one known also in Web API.
+                    new Claim(ClaimTypes.NameIdentifier, result.UserName) //If you want to use User.Identity.GetUserId in Web API, you need a NameIdentifier claim.
+                };
+
+                //Generate a new ClaimsIdentity, using the DefaultAuthenticationTypes.ApplicationCookie authenticationType.
+                //This also matches what we've set up in Web API.
+                var authTicket = new AuthenticationTicket(new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie), new AuthenticationProperties
+                {
+                    ExpiresUtc = result.Expires,
+                    IsPersistent = model.RememberMe,
+                    IssuedUtc = result.Issued,
+                    RedirectUri = returnUrl
+                });
+
+                //And now it's time to generate the cookie data. This is using the same code that is being used by the CookieAuthenticationMiddleware class in OWIN.
+                byte[] userData = DataSerializers.Ticket.Serialize(authTicket);
+
+                //Protect this user data and add the extra properties. These need to be the same as in Web API!
+                byte[] protectedData = MachineKey.Protect(userData, new[] { "Microsoft.Owin.Security.Cookies.CookieAuthenticationMiddleware", DefaultAuthenticationTypes.ApplicationCookie, "v1" });
+
+                //base64-encode this data.
+                string protectedText = TextEncodings.Base64Url.Encode(protectedData);
+
+                //And now, we have the cookie.
+                Response.SetCookie(new HttpCookie("HE.API.Auth")
+                {
+                    HttpOnly = true,
+                    Expires = result.Expires.UtcDateTime,
+                    Value = protectedText
+                });
+
+                return Redirect(returnUrl ?? "/");
+            }
+            catch (ApiException ex)
+            {
+                //No 200 OK result, what went wrong?
+                //HandleBadRequest(ex);
+                Debug.WriteLine(ex.Message);
+
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+
+                throw;
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

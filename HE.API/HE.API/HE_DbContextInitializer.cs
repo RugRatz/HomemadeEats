@@ -1,18 +1,19 @@
-﻿using System.Data.Entity;
+﻿using HE.API.DbContexts;
+using System.Data.Entity;
 using System.IO;
 using System.Web;
 
-namespace HE.Domain
+namespace HE.API
 {
     /// <summary>
     /// Database Initializer copied from http://www.drowningintechnicaldebt.com/ShawnWeisfeld/archive/2011/07/15/entity-framework-code-first-executing-sql-files-on-database-creation.aspx
     /// 
     /// </summary>
 
-    public class HE_DbContextInitializer : CreateDatabaseIfNotExists<HE_DbContext>
+    public class HE_DbContextInitializer : CreateDatabaseIfNotExists<HE_IdentityDbContext>
     {
         #region Insert default records into Homemade Eats database
-        protected override void Seed(HE_DbContext context)
+        protected override void Seed(HE_IdentityDbContext context)
         {
             //Create Database
             var dbSetupFilePath = HttpContext.Current.Server.MapPath("~/Schema/Structure/1_HomemadeEats_CreateDB.sql");

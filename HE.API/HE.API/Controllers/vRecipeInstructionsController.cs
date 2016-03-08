@@ -9,7 +9,7 @@ namespace HE.API.Controllers
 {
     public class vRecipeInstructionsController : ApiController
     {
-        private HE_DbContext db = new HE_DbContext();
+        private HE_IdentityDbContext db = new HE_IdentityDbContext();
 
         // GET: api/vRecipeInstructions
         public IQueryable<vRecipeInstruction> GetvRecipeInstructions()

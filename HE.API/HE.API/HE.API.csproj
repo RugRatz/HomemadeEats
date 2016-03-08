@@ -221,17 +221,11 @@
     <Compile Include="Controllers\InstructionsController.cs" />
     <Compile Include="Controllers\MealTypesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
-    <Compile Include="Controllers\vCustomersController.cs" />
-    <Compile Include="Controllers\vGroceriesController.cs" />
-    <Compile Include="Controllers\vHomemadeItemsController.cs" />
-    <Compile Include="Controllers\vIngredientNotesController.cs" />
-    <Compile Include="Controllers\vIngredientsController.cs" />
-    <Compile Include="Controllers\vRecipeInstructionsController.cs" />
     <Compile Include="DbContexts\HE_IdentityContext.cs" />
-    <Compile Include="DbContexts\HE_DbContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HE_DbContextInitializer.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
