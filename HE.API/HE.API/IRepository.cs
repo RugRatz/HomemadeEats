@@ -13,7 +13,7 @@ namespace HE.API
         //Task<List<TEntity>> PageAllAsync(CancellationToken cancellationToken, int skip, int take);
 
         //TEntity FindById(object id);
-        Task<TEntity> FindByIdAsync(object id);
+        //Task<TEntity> FindByIdAsync(object id);
         //Task<TEntity> FindByIdAsync(CancellationToken cancellationToken, object id);
 
         //void Add(TEntity entity);

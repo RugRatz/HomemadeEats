@@ -5,7 +5,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using HE.API;
-using HE.DataAccess;
+using HE.API.Models;
 
 namespace HE.MVC.UserInterface
 {

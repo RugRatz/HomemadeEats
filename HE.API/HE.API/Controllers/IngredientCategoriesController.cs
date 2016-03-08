@@ -5,7 +5,8 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using HE.DataAccess;
+using HE.Domain;
+using HE.API.DbContexts;
 
 namespace HE.API.Controllers
 {

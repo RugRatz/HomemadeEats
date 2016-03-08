@@ -31,7 +31,7 @@ namespace HE.API.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class RegisterBindingModel
+    public class RegisterViewModel
     {
         [Required]
         [Display(Name = "Email Address")]

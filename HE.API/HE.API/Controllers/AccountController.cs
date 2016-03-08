@@ -15,7 +15,6 @@ using Microsoft.Owin.Security.OAuth;
 using HE.API.Models;
 using HE.API.Providers;
 using HE.API.Results;
-using HE.DataAccess;
 
 namespace HE.API.Controllers
 {
@@ -74,8 +73,8 @@ namespace HE.API.Controllers
             return Ok();
         }
 
-    // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
-    [Route("ManageInfo")]
+        // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
+        [Route("ManageInfo")]
         public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false)
         {
             IdentityUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -321,7 +320,7 @@ namespace HE.API.Controllers
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        public async Task<IHttpActionResult> Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid)
             {

@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.MVC.UserInterface", "HE.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.API", "..\HE.API\HE.API\HE.API.csproj", "{1B4455D7-D475-47AB-A20F-A8C892C1FCC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.DataAccess", "..\HE.DataAccess\HE.DataAccess\HE.DataAccess.csproj", "{0262D808-8F37-437E-859F-5B04E28F0E50}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Domain", "..\HE.Domain\HE.Domain\HE.Domain.csproj", "{0262D808-8F37-437E-859F-5B04E28F0E50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,12 +1,13 @@
 ﻿using System.Linq;
 using System.Web.Http;
-using HE.DataAccess;
+using HE.API.DbContexts;
+using HE.API.Models;
 
 namespace HE.API.Controllers
 {
     public class CustomerProfilesController : ApiController
     {
-        private HE_DbContext db = new HE_DbContext();
+        private HE_IdentityDbContext db = new HE_IdentityDbContext();
 
         // GET: api/CustomerProfiles
         public IQueryable<CustomerProfile> GetCustomerProfiles()

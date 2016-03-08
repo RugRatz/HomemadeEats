@@ -5,22 +5,35 @@ using HE.DataAccess;
 using System.Data.Entity;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Linq.Expressions;
 
 namespace HE.API
 {
-    internal class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class HERepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        private HE_DbContext _context;
+        public HE_DbContext _context { get; private set; }
         private DbSet<TEntity> _set;
+        public bool AutoSaveChanges { get; set; }
+        public bool DisposeContext { get; set; }
 
-        internal Repository(HE_DbContext context)
+        public HERepository(HE_DbContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException("HE_DbContext");
+            }
             _context = context;
+            AutoSaveChanges = true;
         }
 
         protected DbSet<TEntity> Set
         {
             get { return _set ?? (_set = _context.Set<TEntity>()); }
+        }
+
+        public IQueryable<TEntity> Users
+        {
+            get { return _context.Set<TEntity>(); }
         }
 
         public List<TEntity> GetAll()
