@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
 using System;
+using Thinktecture.IdentityModel.Client;
 
 namespace HE.MVC.UserInterface
 {
@@ -25,26 +26,35 @@ namespace HE.MVC.UserInterface
 
         public string BaseUri { get; private set; }
 
-        public async Task<T> AuthenticateAsync<T>(string userName, string password)
+        //public async Task<T> AuthenticateAsync<T>(string userName, string password)
+        //{
+        //    using (var client = new HttpClient())
+        //    {
+        //        var result = await client.PostAsync(BuildActionUri("/Token"), new FormUrlEncodedContent(new List<KeyValuePair<string, string>>
+        //        {
+        //            new KeyValuePair<string, string>("grant_type", "password"),
+        //            new KeyValuePair<string, string>("userName", userName), 
+        //            new KeyValuePair<string, string>("password", password)
+        //        }));
+
+        //        string json = await result.Content.ReadAsStringAsync();
+
+        //        result.EnsureSuccessStatusCode();
+
+        //        if (result.IsSuccessStatusCode)
+        //        {
+        //            return JsonConvert.DeserializeObject<T>(json);
+        //        }
+        //        //throw new ApiException(result.StatusCode, json);
+        //        throw new Exception(json);
+        //    }
+        //}
+
+        public async Task<TokenResponse>RetrieveToken(string userName, string password)
         {
-            using (var client = new HttpClient())
-            {
-                var result = await client.PostAsync(BuildActionUri("Token"), new FormUrlEncodedContent(new List<KeyValuePair<string, string>>
-                {
-                    new KeyValuePair<string, string>("grant_type", "password"),
-                    new KeyValuePair<string, string>("userName", userName), 
-                    new KeyValuePair<string, string>("password", password)
-                }));
+            var client = new OAuth2Client(new Uri(BuildActionUri("/Token")));
 
-                string json = await result.Content.ReadAsStringAsync();
-                if (result.IsSuccessStatusCode)
-                {
-                    return JsonConvert.DeserializeObject<T>(json);
-                }
-
-                //throw new ApiException(result.StatusCode, json);
-                throw new Exception(json);
-            }
+            return await client.RequestResourceOwnerPasswordAsync(userName, password);
         }
 
         public async Task<T> GetAsync<T>(string action, string authToken = null)
@@ -101,6 +111,9 @@ namespace HE.MVC.UserInterface
                 }
 
                 var result = await client.PostAsJsonAsync(BuildActionUri(action), data);
+
+                //result.EnsureSuccessStatusCode();
+
                 if (result.IsSuccessStatusCode)
                 {
                     return;

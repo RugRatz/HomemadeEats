@@ -13,6 +13,10 @@ using System.Security.Claims;
 using System.Web.Security;
 using Microsoft.Owin.Security.DataHandler.Encoder;
 using HE.API.Models;
+using System.Net.Http;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using System;
 
 namespace HE.MVC.UserInterface.Controllers
 {
@@ -81,12 +85,15 @@ namespace HE.MVC.UserInterface.Controllers
 
             try
             {
-                var customer = new CustomerProfile { UserName = model.Email, Email = model.Email };
+                //var customer = new CustomerProfile { UserName = model.Email, Email = model.Email };
 
                 await WebApiService.Instance.PostAsync("api/Account/Register", model);
 
-                await SignInManager.SignInAsync(customer, isPersistent: false, rememberBrowser: false);
-
+                //this part is probably handled differently
+                //await SignInManager.SignInAsync(, isPersistent: false, rememberBrowser: false);
+                //await SignInHelper
+                var result = SignInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+                
                 return RedirectToAction("Index", "Home");
             }
             catch (ApiException ex)
@@ -144,8 +151,11 @@ namespace HE.MVC.UserInterface.Controllers
             #endregion
             try
             {
-                var result = await WebApiService.Instance.AuthenticateAsync<SignInResult>(model.Email, model.Password);
+                var result = await AuthenticateAsync<SignInResult>(model.Email, model.Password);
 
+                if (result.UserName == null)
+                    return View(model);
+                
                 //Let's keep the user authenticated in the MVC webapp.
                 //By using the AccessToken, we can use User.Identity.Name in the MVC controllers to make API calls.
                 FormsAuthentication.SetAuthCookie(result.AccessToken, model.RememberMe);
@@ -282,5 +292,38 @@ namespace HE.MVC.UserInterface.Controllers
         //}
         #endregion
         #endregion
+
+
+        private string BuildActionUri(string action)
+        {
+            return "https://localhost:44301/" + action;
+        }
+
+        public async Task<SignInResult> AuthenticateAsync<SignInResult>(string userName, string password)
+        {
+            using (var client = new HttpClient())
+            {
+                var result = await client.PostAsync(BuildActionUri("/Token"), new FormUrlEncodedContent(new List<KeyValuePair<string, string>>
+                {
+                    new KeyValuePair<string, string>("grant_type", "password"),
+                    new KeyValuePair<string, string>("userName", userName),
+                    new KeyValuePair<string, string>("password", password)
+                }));
+
+                string json = await result.Content.ReadAsStringAsync();
+
+                //result.EnsureSuccessStatusCode();
+
+                if (!result.IsSuccessStatusCode)
+                {
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                }
+
+                return JsonConvert.DeserializeObject<SignInResult>(json);
+
+                //throw new ApiException(result.StatusCode, json);
+                //throw new Exception(json);
+            }
+        }
     }
 }

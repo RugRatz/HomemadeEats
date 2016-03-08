@@ -27,7 +27,7 @@ namespace HE.MVC.UserInterface
         }
     }
 
-    //My HE.API project already has this part
+    #region My HE.API project already has this part
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
     //public class ApplicationUserManager : UserManager<ApplicationUser>
     //{
@@ -83,6 +83,7 @@ namespace HE.MVC.UserInterface
     //        return manager;
     //    }
     //}
+    #endregion
 
     // Configure the application sign-in manager which is used in this application.
     public class ApplicationSignInManager : SignInManager<CustomerProfile, string>
