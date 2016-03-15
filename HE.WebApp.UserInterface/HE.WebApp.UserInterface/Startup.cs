@@ -1,9 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup("HE_ApiOwinConfig", typeof(HE.API.Startup))]
-
-namespace HE.API
+[assembly: OwinStartupAttribute("HE_WebApp_UserInterfaceConfig", typeof(HE.WebApp.UserInterface.Startup))]
+namespace HE.WebApp.UserInterface
 {
     public partial class Startup
     {

@@ -24,6 +24,7 @@ namespace HE.API.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
+        //private ApplicationSignInManager _signInManager;
 
         public AccountController()
         {
@@ -48,9 +49,22 @@ namespace HE.API.Controllers
             }
         }
 
+        //public ApplicationSignInManager SignInManager
+        //{
+        //    get
+        //    {
+        //        return _signInManager ?? Request.GetOwinContext().Get<ApplicationSignInManager>();
+        //    }
+        //    private set
+        //    {
+        //        _signInManager = value;
+        //    }
+        //}
+
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
         // GET api/Account/UserInfo
+        // DefaultAuthenticationTypes.ExternalBearer accept tokens resulting from external authentication – but require an authenticated principal
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]
         public UserInfoViewModel GetUserInfo()
@@ -77,7 +91,7 @@ namespace HE.API.Controllers
         [Route("ManageInfo")]
         public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false)
         {
-            IdentityUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            CustomerProfile user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
             if (user == null)
             {
@@ -220,7 +234,7 @@ namespace HE.API.Controllers
         }
 
         // GET api/Account/ExternalLogin
-        [OverrideAuthentication]
+        [OverrideAuthentication]    // override global setting and only accept an application cookie
         [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
         [AllowAnonymous]
         [Route("ExternalLogin", Name = "ExternalLogin")]
@@ -335,12 +349,13 @@ namespace HE.API.Controllers
             {
                 return GetErrorResult(result);
             }
-
-            return Ok();
+            //var authResponseGrant = this.Authentication.AuthenticationResponseGrant;
+            return Ok(result);
+            //return Ok();
         }
 
         // POST api/Account/RegisterExternal
-        [OverrideAuthentication]
+        [OverrideAuthentication] // override global setting and only accept an application cookie
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("RegisterExternal")]
         public async Task<IHttpActionResult> RegisterExternal(RegisterExternalBindingModel model)

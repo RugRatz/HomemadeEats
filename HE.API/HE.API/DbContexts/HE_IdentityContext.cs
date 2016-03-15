@@ -45,28 +45,42 @@ namespace HE.API.DbContexts
             ////Customize IdentityUser for Homemade Eats DB - Define the mappings
 
             //this is DEFININTELY NEEDED
-            modelBuilder.Entity<IdentityUser>().ToTable("CustomerProfile").Property(p => p.Id).HasColumnName("CustomerProfileID");
-            modelBuilder.Entity<CustomerProfile>().Property(p => p.LockoutEndDateUtc).HasColumnName("LockoutEndDateUTC");
-            modelBuilder.Entity<CustomerProfile>().Property(p => p.Email).HasColumnName("EmailAddress");
-            modelBuilder.Entity<CustomerProfile>().Property(p => p.PhoneNumber).HasMaxLength(50);
-            modelBuilder.Entity<CustomerProfile>().Property(p => p.EmailConfirmed).HasColumnName("EmailAddressConfirmed");
-            modelBuilder.Entity<CustomerProfile>().Property(p => p.TwoFactorEnabled).HasColumnName("TwoFactorAuthEnabled");
-            modelBuilder.Entity<CustomerProfile>().Property(p => p.UserName).HasMaxLength(50);
+
+            //modelBuilder.Entity<IdentityUser>().ToTable("CustomerProfile");
+
+            //modelBuilder.Entity<IdentityUser>().Property(p => p.Id).HasColumnName("CustomerProfileID");
+            //modelBuilder.Entity<CustomerProfile>().Property(p => p.LockoutEndDateUtc).HasColumnName("LockoutEndDateUTC");
+            //modelBuilder.Entity<CustomerProfile>().Property(p => p.Email).HasColumnName("EmailAddress");
+            //modelBuilder.Entity<CustomerProfile>().Property(p => p.PhoneNumber).HasMaxLength(50);
+            //modelBuilder.Entity<CustomerProfile>().Property(p => p.EmailConfirmed).HasColumnName("EmailAddressConfirmed");
+            //modelBuilder.Entity<CustomerProfile>().Property(p => p.TwoFactorEnabled).HasColumnName("TwoFactorAuthEnabled");
+            //modelBuilder.Entity<CustomerProfile>().Property(p => p.UserName).HasMaxLength(50);
 
             ////may not have a need for the table IdentityUserRole since Homemade Eats should give the owner full priviledges?
             ////will keep this just in case I find a need for it in the future
             ////Customize table name as well as field UserId to CustomerProfileID all at once
-            modelBuilder.Entity<IdentityUserRole>().ToTable("UserRole").Property(p => p.UserId).HasColumnName("CustomerProfileID");
 
-            modelBuilder.Entity<IdentityUserLogin>().ToTable("CustomerLogin").Property(p => p.UserId).HasColumnName("CustomerProfileID");
+            //modelBuilder.Entity<IdentityUserRole>().ToTable("UserRole");
 
-            ////will keep this just in case I find a need for it in the future
-            modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaim").Property(p => p.Id).HasColumnName("UserClaimID");
+            //modelBuilder.Entity<IdentityUserRole>().Property(p => p.UserId).HasColumnName("CustomerProfileID");
+
+            //modelBuilder.Entity<IdentityUserLogin>().ToTable("CustomerLogin");
+
+            //modelBuilder.Entity<IdentityUserLogin>().Property(p => p.UserId).HasColumnName("CustomerProfileID");
+
+            //will keep this just in case I find a need for it in the future
+
+            //modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaim");
+
+            //modelBuilder.Entity<IdentityUserClaim>().Property(p => p.Id).HasColumnName("UserClaimID");
             //modelBuilder.Entity<IdentityUserClaim>().Property(p => p.UserId).HasColumnName("CustomerProfileID");
 
             ////may not have a need for the table IdentityUserRole since Homemade Eats should give the owner full priviledges?
             ////will keep this just in case I find a need for it in the future
-            modelBuilder.Entity<IdentityRole>().ToTable("Role").Property(p => p.Id).HasColumnName("RoleID");
+
+            //modelBuilder.Entity<IdentityRole>().ToTable("Role");
+
+            //modelBuilder.Entity<IdentityRole>().Property(p => p.Id).HasColumnName("RoleID");
             #endregion
         }
         
