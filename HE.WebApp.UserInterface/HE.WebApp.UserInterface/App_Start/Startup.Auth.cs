@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Owin;
 using HE.API.DbContexts;
 using HE.API.Models;
+using Microsoft.Owin.Security.Google;
 
 namespace HE.WebApp.UserInterface
 {
@@ -54,15 +55,15 @@ namespace HE.WebApp.UserInterface
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "1676987429221183",
+               appSecret: "833a4ccda4872c8d8ebf45b14297e0a1");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "51581202790-7hj5vr2f1e4ns25cr6i4jvmn4e4jqg8i.apps.googleusercontent.com",
+                ClientSecret = "ebbcxN32FkS0Fk3zI8CBmkFo"
+            });
         }
     }
 }

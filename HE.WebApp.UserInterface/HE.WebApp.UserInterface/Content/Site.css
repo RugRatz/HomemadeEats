@@ -1,7 +1,25 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿footer {
+   position:absolute;
+   bottom:0;
+   /*width: 90%;*/
 }
+
+body {
+    background: url(images/roots.jpg) no-repeat center center fixed;
+    background-size: cover; /* causes image to be full size of the screen */
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/*html, body {
+    background: url(images/roots.jpg) no-repeat center center fixed;
+    background-size: cover; /* causes image to be full size of the screen */
+    /*height: 100%;*/
+    /*margin: 0;*/
+    /*padding: 0;*/
+/*}*/
+
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
@@ -21,4 +39,18 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.transparency1 {
+    opacity: 0.75;
+    filter: alpha(opacity=75); /* For IE8 and earlier */
+}
+
+.text-blackbold {
+    font-weight: bold;
+    color: black;
+}
+
+a {
+  color: black;
 }

@@ -55,19 +55,19 @@ namespace HE.WebApp.UserInterface.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Signin(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
-        #region Try 1: Login 
+        #region Try 1: Signin 
         //
-        // POST: /Account/Login
+        // POST: /Account/Signin
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Signin(SigninViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -76,11 +76,11 @@ namespace HE.WebApp.UserInterface.Controllers
             
             //Manually add a claim for the user's identity
             var claims = new List<Claim>();
-            claims.Add(new Claim(ClaimTypes.Name, model.Email));
-            claims.Add(new Claim(ClaimTypes.Email, model.Email));
+            claims.Add(new Claim(ClaimTypes.Name, model.EmailAddress));
+            claims.Add(new Claim(ClaimTypes.Email, model.EmailAddress));
             var userIdentity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
             
-            var isSignInSuccessful = await AttemptSignIn(userIdentity, model.Email, model.Password);
+            var isSignInSuccessful = await AttemptSignIn(userIdentity, model.EmailAddress, model.Password);
 
             // Redirect is needed to set the User object. User object is only set on the subsequent request.
             if (isSignInSuccessful)
@@ -236,11 +236,11 @@ namespace HE.WebApp.UserInterface.Controllers
 
                 //manually add a claim for the user's identity
                 var claims = new List<Claim>();
-                claims.Add(new Claim(ClaimTypes.Name, model.Email));
-                claims.Add(new Claim(ClaimTypes.Email, model.Email));
+                claims.Add(new Claim(ClaimTypes.Name, model.EmailAddress));
+                claims.Add(new Claim(ClaimTypes.Email, model.EmailAddress));
                 var userIdentity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
 
-                var isSignInSuccessful = await AttemptSignIn(userIdentity, model.Email, model.Password);
+                var isSignInSuccessful = await AttemptSignIn(userIdentity, model.EmailAddress, model.Password);
 
                 // Redirect is needed to set the User object. User object is only set on the subsequent request.
                 if (isSignInSuccessful)
@@ -251,7 +251,7 @@ namespace HE.WebApp.UserInterface.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Signin", "Account");
                 }
             }
 
@@ -451,7 +451,7 @@ namespace HE.WebApp.UserInterface.Controllers
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
             if (loginInfo == null)
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Sigin");
             }
 
             // Sign in the user with this external login provider if the user already has a login
@@ -518,7 +518,7 @@ namespace HE.WebApp.UserInterface.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Signin", "Account");
         }
 
         //
@@ -575,7 +575,7 @@ namespace HE.WebApp.UserInterface.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Signin", "Account");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult
