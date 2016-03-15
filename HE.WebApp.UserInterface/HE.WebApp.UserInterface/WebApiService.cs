@@ -41,8 +41,8 @@ namespace HE.WebApp.UserInterface
                 {
                     return JsonConvert.DeserializeObject<T>(json);
                 }
-                //return JsonConvert.DeserializeObject<T>(json);
-                throw new Exception(result.StatusCode + " " + JsonConvert.DeserializeObject<T>(json));
+                return JsonConvert.DeserializeObject<T>(json);
+                //throw new Exception(result.StatusCode + " " + JsonConvert.DeserializeObject<T>(json));
             }
         }
 
