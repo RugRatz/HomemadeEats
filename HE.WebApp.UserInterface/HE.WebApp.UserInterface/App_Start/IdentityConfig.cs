@@ -86,6 +86,7 @@ namespace HE.WebApp.UserInterface
         
     }
 
+    #region No need to configure application sign-in manager since I'm using the MVC default way
     // Configure the application sign-in manager which is used in this application.
     public class ApplicationSignInManager : SignInManager<CustomerProfile, string>
     {
@@ -104,4 +105,5 @@ namespace HE.WebApp.UserInterface
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
         }
     }
+    #endregion
 }

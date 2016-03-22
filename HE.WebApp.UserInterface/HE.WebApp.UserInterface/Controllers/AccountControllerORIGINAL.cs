@@ -1,6 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -10,6 +8,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using HE.WebApp.UserInterface.Models;
 using HE.API.Models;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace HE.WebApp.UserInterface.Controllers
 {
@@ -62,8 +62,9 @@ namespace HE.WebApp.UserInterface.Controllers
             return View();
         }
 
+        #region Try 1: Signin 
         //
-        // POST: /Account/Login
+        // POST: /Account/Signin
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -74,23 +75,101 @@ namespace HE.WebApp.UserInterface.Controllers
                 return View(model);
             }
             
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
+            //Manually add a claim for the user's identity
+            var claims = new List<Claim>();
+            claims.Add(new Claim(ClaimTypes.Name, model.EmailAddress));
+            claims.Add(new Claim(ClaimTypes.Email, model.EmailAddress));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, model.EmailAddress));
+            var userIdentity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
+            
+            var isSignInSuccessful = await AttemptSignIn(userIdentity, model.EmailAddress, model.Password);
+
+            // Redirect is needed to set the User object. User object is only set on the subsequent request.
+            if (isSignInSuccessful)
             {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                //return RedirectToLocal(returnUrl);
+                return RedirectToAction("Welcome", "MealTypesUI");
             }
+
+            ModelState.AddModelError("", "Invalid login attempt.");
+            return View(model);
+            #region Unable to use SignInManager due to UserId issue.  ASP pipeline doesn't set the User until the next request! That is why you see at the end a Redirect... which will send in the next request and set the User.
+            // I was not able to use the SignInManager because it is unable to locate the logged in user's UserId
+            //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            //switch (result)
+            //{
+            //    case SignInStatus.Success:
+            //        return RedirectToLocal(returnUrl);
+            //    case SignInStatus.LockedOut:
+            //        return View("Lockout");
+            //    case SignInStatus.RequiresVerification:
+            //        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+            //    case SignInStatus.Failure:
+            //    default:
+            //        ModelState.AddModelError("", "Invalid login attempt.");
+            //        return View(model);
+            //}
+            #endregion
         }
+        #endregion
+
+
+        #region Login ORIGINAL
+        //
+        // POST: /Account/Login
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(model);
+        //    }
+
+        //    // This doesn't count login failures towards account lockout
+        //    // To enable password failures to trigger account lockout, change to shouldLockout: true
+        //    var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+        //    switch (result)
+        //    {
+        //        case SignInStatus.Success:
+        //            return RedirectToLocal(returnUrl);
+        //        case SignInStatus.LockedOut:
+        //            return View("Lockout");
+        //        case SignInStatus.RequiresVerification:
+        //            return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+        //        case SignInStatus.Failure:
+        //        default:
+        //            ModelState.AddModelError("", "Invalid login attempt.");
+        //            return View(model);
+        //    }
+        //}
+        #endregion
+
+        /// <summary>
+        /// Attempts to retrieve a token from HE.API to validate the user logging in
+        /// If login user is valid, use the 
+        ///     AuthenticationManager.SignIn(userIdentity)
+        /// to create the application cookie for current user logging in
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> AttemptSignIn(ClaimsIdentity userIdentity,string email, string password)
+        {
+            // Attempt to get an authentication token from the HE.API -> TokenEndpoint
+            // Token endpoint will send back a token ONLY IF the user is a valid user
+            var result = await WebApiService.Instance.AuthenticateAndGetTokenAsync<SignInResult>(email, password);
+
+            // If retreiving a token is successful, then proceed to sign in the user
+            if (result.AccessToken != null)
+            {
+                // If we get in here, this means that the person/user attempting to login is a valid user stored in the database
+                // Only create the application cookie for the person/user if user has been validated on the HE.API side
+                AuthenticationManager.SignIn(userIdentity);
+                return true;
+            }
+            return false;
+        }
+
 
         //
         // GET: /Account/VerifyCode
@@ -142,7 +221,8 @@ namespace HE.WebApp.UserInterface.Controllers
         {
             return View();
         }
-
+        
+        #region Try 1 - Register  WORKS!!!! Amen!!
         //
         // POST: /Account/Register
         [HttpPost]
@@ -152,28 +232,104 @@ namespace HE.WebApp.UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new CustomerProfile { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                //var test = new Microsoft.AspNet.Identity.UserManager<> requires an IUserStore
-                var auth = Request.IsAuthenticated;
-                if (result.Succeeded)
+                // This part is done on the WebApi
+                //var result = await UserManager.CreateAsync(user, model.Password);
+
+                // route the Register job to the WebApi
+                var result = await WebApiService.Instance.PostAsync("/api/Account/Register", model);
+                var json = await result.Content.ReadAsStringAsync();
+                var anonymousErrorObject =
+                        new { message = "", ModelState = new Dictionary<string, string[]>() };
+
+                // Converts the JSON result to an IdentityResult object
+                var deserializedErrorObject = JsonConvert.DeserializeAnonymousType(json, anonymousErrorObject);
+
+
+                if (result.IsSuccessStatusCode)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    auth = Request.IsAuthenticated;
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    // manually add a claim for the user's identity
+                    // Claims are items stored in the cookie and @Html.AntiForgeryToken() looks for a NameIdentifier in the cookie 
+                    // - this is set on Global.asax.cs AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
+                    // On _LoginPartial.cshtml, the User.Identity.GetUserName() looks inside the cookie for the claim type titled "Name" - this is set in code by claims.Add(new Claim(ClaimTypes.Name, model.EmailAddress));
+                    var claims = new List<Claim>();
+                    claims.Add(new Claim(ClaimTypes.Name, model.Email));
+                    claims.Add(new Claim(ClaimTypes.Email, model.Email));
 
+                    // Needed to add this because I set the app to look for this particular item in the cookie to identify the user
+                    claims.Add(new Claim(ClaimTypes.NameIdentifier, model.Email));
+                    var userIdentity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
+
+                    var isSignInSuccessful = await AttemptSignIn(userIdentity, model.Email, model.Password);
+
+                    // Redirect is needed to set the User object. User object is only set on the subsequent request.
+                    if (isSignInSuccessful)
+                    {
+                        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                        // Send an email with this link
+                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                        //return RedirectToAction("Signin", "Account");
                         return RedirectToAction("Welcome", "MealTypesUI");
+                    }
                 }
-                AddErrors(result);
-            }
 
+                // Errors on the API side are handled SEPARATELY and DIFFERENTLY
+                // You will need to add errors to your modelstate manually
+                // Check if there are actually model errors
+                if (deserializedErrorObject.ModelState != null)
+                {
+                    var errors =
+                        deserializedErrorObject.ModelState
+                                                .Select(kvp => string.Join(". ", kvp.Value));
+
+                    foreach(var error in errors)
+                    {
+                        ModelState.AddModelError("", error);
+                    }
+                }
+            }
+            
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+        #endregion
+
+        #region Original Register(Models.RegisterViewModel model) method
+        //
+        // POST: /Account/Register
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Register(Models.RegisterViewModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var user = new CustomerProfile { UserName = model.Email, Email = model.Email };
+        //        var result = await UserManager.CreateAsync(user, model.Password);
+
+        //        if (result.Succeeded)
+        //        {
+        //            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+
+        //            // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+        //            // Send an email with this link
+        //            // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+        //            // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+        //            // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+        //            return RedirectToAction("Index", "Home");
+        //        }
+
+        //        AddErrors(result);
+        //    }
+
+        //    // If we got this far, something failed, redisplay form
+        //    return View(model);
+        //}
+        #endregion
 
         //
         // GET: /Account/ConfirmEmail
@@ -328,7 +484,7 @@ namespace HE.WebApp.UserInterface.Controllers
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
             if (loginInfo == null)
             {
-                return RedirectToAction("Signin");
+                return RedirectToAction("Sigin");
             }
 
             // Sign in the user with this external login provider if the user already has a login
@@ -452,8 +608,7 @@ namespace HE.WebApp.UserInterface.Controllers
             {
                 return Redirect(returnUrl);
             }
-            //return RedirectToAction("Signin", "Account");
-            return RedirectToAction("Welcome", "MealTypesUI");
+            return RedirectToAction("Signin", "Account");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult
