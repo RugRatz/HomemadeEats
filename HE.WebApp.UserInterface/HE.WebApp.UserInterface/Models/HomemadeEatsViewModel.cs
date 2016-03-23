@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System;
+using System.Collections.Generic;
 
 namespace HE.WebApp.UserInterface.Models
 {
@@ -10,6 +11,10 @@ namespace HE.WebApp.UserInterface.Models
         [Display(Name = "Meal Type")]
         public string Name { get; set; }
 
+        [StringLength(256, ErrorMessage = "Maximum of 250 characters.")]
+        [Display(Name = "Meal Type File Location", Prompt = "Add an image for your meal type (PNG, JPEG/JPG only)")]
+        public string ImageFilePath { get; set; }
+
         [Display(Prompt = "Is a default Meal Type?")]
         public bool? IsSystemDefault { get; set; }
 
@@ -19,4 +24,10 @@ namespace HE.WebApp.UserInterface.Models
         [Display(Name = "Last Updated")]
         public DateTime? LastUpdatedUTC { get; set; }
     }
+
+    public class MealTypesViewList
+    {
+        public List<MealTypesViewModel> MealTypesItemList { get; set; }
+    }
+
 }

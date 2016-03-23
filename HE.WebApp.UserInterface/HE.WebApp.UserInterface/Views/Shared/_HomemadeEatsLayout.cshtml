@@ -18,14 +18,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Homemade Eats", "Welcome", "MealTypesUI", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Homemade Eats", "Welcome", "HomemadeEats", new { area = "" }, new { @class = "navbar-brand" })
             </div>
 
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Menu", "Welcome", "MealTypesUI")</li>
-                        <li>@Html.ActionLink("Community", "Welcome", "MealTypesUI")</li>
-                        <li>@Html.ActionLink("My Page", "Welcome", "MealTypesUI")</li>
+                        <li>@Html.ActionLink("Menu", "Welcome", "HomemadeEats")</li>
+                        <li>@Html.ActionLink("Community", "Welcome", "HomemadeEats")</li>
+                        <li>@Html.ActionLink("My Page", "Welcome", "HomemadeEats")</li>
                     </ul>
             @Html.Partial("_LoginPartial");
             </div>
@@ -33,14 +33,15 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-
-        <footer>
+        <div class="container-fluid text-center">
+            <hr />
             <p>&copy;Homemade Eats @DateTime.Now.Year</p>
-        </footer>
+        </div>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
 </body>
 </html>

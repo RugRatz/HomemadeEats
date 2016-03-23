@@ -48,9 +48,6 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="HE.Domain">
-      <HintPath>..\..\HE.Domain\HE.Domain\obj\Release\HE.Domain.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -185,13 +182,13 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\MealTypesUIController.cs" />
+    <Compile Include="Controllers\HomemadeEatsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\MealTypesViewModel.cs" />
+    <Compile Include="Models\HomemadeEatsViewModel.cs" />
     <Compile Include="Models\SignInResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -285,8 +282,9 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\MealTypesUI\Welcome.cshtml" />
+    <Content Include="Views\HomemadeEats\Welcome.cshtml" />
     <Content Include="Views\Shared\_HomemadeEatsLayout.cshtml" />
+    <Content Include="Views\HomemadeEats\Welcome-Backup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -308,6 +306,10 @@
     <ProjectReference Include="..\..\HE.API\HE.API\HE.API.csproj">
       <Project>{1b4455d7-d475-47ab-a20f-a8c892c1fcc9}</Project>
       <Name>HE.API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\HE.Domain\HE.Domain\HE.Domain.csproj">
+      <Project>{0262d808-8f37-437e-859f-5b04e28f0e50}</Project>
+      <Name>HE.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

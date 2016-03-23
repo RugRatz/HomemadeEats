@@ -63,6 +63,7 @@ a {
   color: black;
 }
 
+/*not used*/
 .thumbnailsBreakfastImg {
     /*position: absolute;*/
     /*top: 0;
@@ -74,6 +75,7 @@ a {
     background-size: contain;
 }
 
+/*not used*/
 .thumbnailStyling {
     /*width:250px;*/
     /*border:2px black solid;
@@ -84,10 +86,12 @@ a {
     box-shadow: 5px 0px 40px black; /*rgba(0,0,0, .2);*/
 }
 
+/*not used*/
 .imgStyle {
     height: 200px;
 }
 
+/*not used*/
 #img_container {
     position:relative;
     display:inline-block;
@@ -95,6 +99,7 @@ a {
     border:1px solid red;
 }
 
+/*not used*/
 .buttonOverlay {
     position:absolute;
     bottom:10px;

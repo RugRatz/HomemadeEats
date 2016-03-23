@@ -70,7 +70,7 @@ namespace HE.WebApp.UserInterface.Controllers
             // and is still logged (top right reads Hello Lisa!)
             // but the screen that shows is the Signin screen instead of the Welcome screen
             if (Request.IsAuthenticated && User.Identity.GetUserName() != null)
-                return RedirectToAction("Welcome", "MealTypesUI");
+                return RedirectToAction("Welcome", "HomemadeEats");
 
             return View();
         }
@@ -179,7 +179,7 @@ namespace HE.WebApp.UserInterface.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                        return RedirectToAction("Welcome", "MealTypesUI");
+                        return RedirectToAction("Welcome", "HomemadeEats");
                 }
                 AddErrors(result);
             }
@@ -466,7 +466,7 @@ namespace HE.WebApp.UserInterface.Controllers
                 return Redirect(returnUrl);
             }
             //return RedirectToAction("Signin", "Account");
-            return RedirectToAction("Welcome", "MealTypesUI");
+            return RedirectToAction("Welcome", "HomemadeEats");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

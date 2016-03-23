@@ -7,6 +7,7 @@ using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
 using System;
 using HE.API.Models;
+using HE.WebApp.UserInterface.Models;
 
 namespace HE.WebApp.UserInterface
 {
@@ -47,7 +48,7 @@ namespace HE.WebApp.UserInterface
             }
         }
 
-        public async Task<List<MealTypesModel>> GetAsync(string action, string authToken = null)
+        public async Task<List<MealTypesViewModel>> GetAsync(string action, string authToken = null)
         {
             using (var client = new HttpClient())
             {
@@ -64,10 +65,10 @@ namespace HE.WebApp.UserInterface
                 {
                     //var test = JsonConvert.DeserializeObject<List<MealTypesModel>>(json);
                     //var a = test;
-                    return JsonConvert.DeserializeObject<List<MealTypesModel>>(json);
+                    return JsonConvert.DeserializeObject<List<MealTypesViewModel>>(json);
                 }
 
-                throw new Exception(result.StatusCode + " " + JsonConvert.DeserializeObject<List<MealTypesModel>>(json));
+                throw new Exception(result.StatusCode + " " + JsonConvert.DeserializeObject<List<MealTypesViewModel>>(json));
             }
         }
 

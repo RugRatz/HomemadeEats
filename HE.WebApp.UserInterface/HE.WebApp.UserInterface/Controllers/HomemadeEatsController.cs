@@ -13,13 +13,21 @@ using HE.WebApp.UserInterface.Models;
 
 namespace HE.WebApp.UserInterface.Controllers
 {
-    public class MealTypesUIController : Controller
+    public class HomemadeEatsController : Controller
     {
         // GET: MealTypesModels
         public async Task<ActionResult> Welcome()
         {
-            var mealTypesList = await WebApiService.Instance.GetAsync("api/MealTypes");
-            return View("Welcome");
+            var mealTypesList = new MealTypesViewList();
+            mealTypesList.MealTypesItemList = await WebApiService.Instance.GetAsync("api/MealTypes");
+
+            // In order to send data to the view file (cshtml file), 
+            // you must send in the object that contains the data 
+            // AND from within the cshtml file, add the statement to include the object you need to access like
+            // @model HE.WebApp.UserInterface.Models.MealTypesViewList
+
+            // Pass in the list to the view like so
+            return View("Welcome", mealTypesList);
         }
 
         #region GET: MealTypesModels/Details/5

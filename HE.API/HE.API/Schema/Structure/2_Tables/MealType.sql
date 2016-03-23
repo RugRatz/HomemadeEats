@@ -7,7 +7,8 @@ SET QUOTED_IDENTIFIER ON
 
 CREATE TABLE [dbo].[MealType](
 	[MealTypeID] [int] IDENTITY(1,1) NOT NULL,
-	[Name] [nvarchar](max) NOT NULL,
+	[Name] [nvarchar](150) NOT NULL,
+	[ImageFilePath] [nvarchar](256) NULL,
 	[IsSystemDefault] [bit] NULL,
 	[DateCreatedUTC] [datetime] NULL,
 	[LastUpdatedUTC] [datetime] NULL,
@@ -15,4 +16,4 @@ CREATE TABLE [dbo].[MealType](
 (
 	[MealTypeID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY] 
