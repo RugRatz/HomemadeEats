@@ -21,14 +21,13 @@
                 @Html.ActionLink("Homemade Eats", "Welcome", "MealTypesUI", new { area = "" }, new { @class = "navbar-brand" })
             </div>
 
-
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Menu", "", "")</li>
-                        <li>@Html.ActionLink("Community", "", "")</li>
-                        <li>@Html.ActionLink("My Page", "", "")</li>
+                        <li>@Html.ActionLink("Menu", "Welcome", "MealTypesUI")</li>
+                        <li>@Html.ActionLink("Community", "Welcome", "MealTypesUI")</li>
+                        <li>@Html.ActionLink("My Page", "Welcome", "MealTypesUI")</li>
                     </ul>
-                @Html.Partial("_LoginPartial")
+            @Html.Partial("_LoginPartial");
             </div>
         </div>
     </div>

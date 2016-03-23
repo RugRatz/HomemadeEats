@@ -1,0 +1,42 @@
+﻿@model HE.WebApp.UserInterface.Models.MealTypesViewModel
+@{
+    ViewBag.Title = "Welcome";
+    Layout = "~/Views/Shared/_HomemadeEatsLayout.cshtml";
+}
+
+<h2>Welcome</h2>
+
+
+<div id="welcomeScreen" class="text-center">
+    <h3>HOMEMADE EATS [LOGO]</h3>s
+    <h1><p><em class="text-blackbold">We love homemade food!</em></p></h1>
+    <br>
+
+    <div class="container-fluid">
+        <div class="row slideanim text-center">
+            <div class="col-md-4 ">
+                <a href="#breakfast" class="thumbnail" > 
+                    <!--class="thumbnail"-->
+                    <img src="~/Content/Images/omlete.jpg" class="img-responsive" alt="Breakfast" style="height:255px">
+                </a>
+                <button class="btn btn-lg btn-link" style="border-style: none">Breakfast</button>
+            </div>
+
+            <div class="col-md-4">
+                <a href="#lunch" class="thumbnail"><!--class="thumbnail"-->
+                    <img src="~/Content/Images/lunch2.jpg" class="img-responsive" alt="Lunch" style="height:255px">
+                </a>
+                <button class="btn btn-block btn-lg btn-link">Lunch</button>
+            </div>
+
+            <div class="col-md-4">
+                <a href="#dinner" class="thumbnail"><!--class="thumbnail"-->
+                    <img src="~/Content/Images/dinnerFajita.jpg" class="img-responsive" alt="Dinner" style="height:255px">
+                </a>
+                <button class="btn btn-block btn-lg btn-link">Lunch</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>

@@ -71,6 +71,9 @@ namespace HE.WebApp.UserInterface.Controllers
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
+
+            // Leaving the first parameter empty works and allows me to switch the master layout for the screen
+            //return View("", "_HomemadeEatsLayout", model);
             return View(model);
         }
 

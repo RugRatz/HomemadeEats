@@ -53,12 +53,25 @@ namespace HE.WebApp.UserInterface.Controllers
             }
         }
 
+        /// <summary>
+        /// Signin is hit upon startup and this is configured through
+        /// RouteConfig.cs
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         //
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Signin(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+            
+            // Added this to handle the case when the user reopens tab
+            // and is still logged (top right reads Hello Lisa!)
+            // but the screen that shows is the Signin screen instead of the Welcome screen
+            if (Request.IsAuthenticated && User.Identity.GetUserName() != null)
+                return RedirectToAction("Welcome", "MealTypesUI");
+
             return View();
         }
 
