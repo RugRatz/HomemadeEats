@@ -218,15 +218,22 @@
     <Content Include="Content\Images\lunch.jpg" />
     <Content Include="Content\Images\lunch2.jpg" />
     <Content Include="Content\Images\lunchPasta.jpg" />
+    <Content Include="Content\Images\noImageAvailable.jpg" />
     <Content Include="Content\Images\omlete.jpg" />
     <Content Include="Content\Images\omleteOnPan.jpg" />
     <Content Include="Content\Images\onion.jpg" />
+    <Content Include="Content\Images\orange.jpg" />
     <Content Include="Content\Images\plain.jpg" />
     <Content Include="Content\Images\roots.jpg" />
     <Content Include="Content\Images\SalmonPotatoOmelette.jpg" />
     <Content Include="Content\Images\spices&amp;Spoons.jpg" />
+    <Content Include="Content\Images\tomato2.jpg" />
+    <Content Include="Content\Images\tomatoes.jpg" />
+    <Content Include="Content\Images\vege2.jpg" />
     <Content Include="Content\Images\veges.jpg" />
     <Content Include="Content\Images\watermarked.jpg" />
+    <Content Include="Content\Images\wine.jpg" />
+    <Content Include="Content\Images\wood-large.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -284,7 +291,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\HomemadeEats\Welcome.cshtml" />
     <Content Include="Views\Shared\_HomemadeEatsLayout.cshtml" />
-    <Content Include="Views\HomemadeEats\Welcome-Backup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

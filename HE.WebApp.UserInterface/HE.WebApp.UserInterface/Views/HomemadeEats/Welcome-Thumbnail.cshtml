@@ -1,0 +1,40 @@
+﻿@model HE.WebApp.UserInterface.Models.MealTypesViewList
+@{
+    ViewBag.Title = "Welcome";
+    Layout = "~/Views/Shared/_HomemadeEatsLayout.cshtml";
+}
+
+<h2>Welcome</h2>
+
+<div id="welcomeScreen" class="text-center">
+    <h3>HOMEMADE EATS [LOGO]</h3>s
+    <h1><p><em class="text-blackbold">We love homemade food!</em></p></h1>
+    <br>
+
+    <div class="container-fluid container-fluidForThumbnail">
+        <div class="row slideanim text-center">
+            @{
+                if (Model.MealTypesItemList.Count() > 0)
+                {
+                    foreach (var mealType in Model.MealTypesItemList)
+                    {
+                        var name = mealType.Name;
+                        var imgSrc = "/Content/Images/noImageAvailable.jpg";
+                        if (mealType.ImageFilePath != null)
+                        {
+                            imgSrc = mealType.ImageFilePath;
+                        }
+                        <div class="col-sm-4">
+                            <div class="thumbnail">
+                                <a href=@name>
+                                    <img src=@imgSrc class="img-responsive" alt=@name style="height:255px">
+                                </a>
+                                <button class="btn btn-lg btn-link">@name</button>
+                            </div> 
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+</div>
