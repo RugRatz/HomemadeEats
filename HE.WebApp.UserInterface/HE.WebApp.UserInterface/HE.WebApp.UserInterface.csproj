@@ -289,8 +289,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\HomemadeEats\Welcome.cshtml" />
+    <Content Include="Views\HomemadeEats\Welcome-Button.cshtml" />
     <Content Include="Views\Shared\_HomemadeEatsLayout.cshtml" />
+    <Content Include="Views\HomemadeEats\Welcome-Thumbnail.cshtml" />
+    <Content Include="Views\HomemadeEats\WelcomeORIGINAL.cshtml" />
+    <Content Include="Views\HomemadeEats\Welcome.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
