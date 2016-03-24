@@ -10,7 +10,7 @@
 </head>
 
 <body class="bodyHE">
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -23,14 +23,37 @@
 
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Menu", "Welcome", "HomemadeEats")</li>
-                        <li>@Html.ActionLink("Community", "Welcome", "HomemadeEats")</li>
-                        <li>@Html.ActionLink("My Page", "Welcome", "HomemadeEats")</li>
-                    </ul>
-            @Html.Partial("_LoginPartial");
+                    <li class="dropdown">
+                        <a class="dropdown-toggle dropbtn" data-toggle="dropdown" href="@Url.Action("Welcome", "HomemadeEats")">
+                        Menu
+                        <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-content dropdown-menu">
+                            @Html.ActionLink("Weekly", "Welcome", "HomemadeEats")
+                            @Html.ActionLink("Groceries", "Welcome", "HomemadeEats")
+                        </div>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle dropbtn" data-toggle="dropdown" href="@Url.Action("Welcome", "HomemadeEats")">
+                            Community
+                            <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-content dropdown-menu">
+                            @Html.ActionLink("My Favs", "Welcome", "HomemadeEats")
+                            @Html.ActionLink("My Circle", "Welcome", "HomemadeEats")
+                            @Html.ActionLink("Events & Parties", "Welcome", "HomemadeEats")
+                            @Html.ActionLink("My Cookbook", "Welcome", "HomemadeEats")
+                        </div>
+                    </li>
+
+                    <li>@Html.ActionLink("My Page", "Welcome", "HomemadeEats")</li>
+
+                </ul>
+                @Html.Partial("_LoginPartial");
             </div>
         </div>
-    </div>
+    </nav>
     <div class="container body-content">
         @RenderBody()
         <div class="container-fluid text-center">
