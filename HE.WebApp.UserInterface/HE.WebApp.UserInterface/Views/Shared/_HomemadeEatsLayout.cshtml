@@ -18,7 +18,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Homemade Eats", "Welcome", "HomemadeEats", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Homemade Eats", "Initialization", "Account", new { area = "" }, new { @class = "navbar-brand" })
             </div>
 
             <div class="navbar-collapse collapse">
@@ -29,25 +29,25 @@
                         <span class="caret"></span>
                         </a>
                         <div class="dropdown-content dropdown-menu">
-                            @Html.ActionLink("Weekly", "Welcome", "HomemadeEats")
-                            @Html.ActionLink("Groceries", "Welcome", "HomemadeEats")
+                            @Html.ActionLink("Weekly", "Initialization", "Account")
+                            @Html.ActionLink("Groceries", "Initialization", "Account")
                         </div>
                     </li>
 
                     <li class="dropdown">
-                        <a class="dropdown-toggle dropbtn" data-toggle="dropdown" href="@Url.Action("Welcome", "HomemadeEats")">
+                        <a class="dropdown-toggle dropbtn" data-toggle="dropdown" href="@Url.Action("Initialization", "Account")">
                             Community
                             <span class="caret"></span>
                         </a>
                         <div class="dropdown-content dropdown-menu">
-                            @Html.ActionLink("My Favs", "Welcome", "HomemadeEats")
-                            @Html.ActionLink("My Circle", "Welcome", "HomemadeEats")
-                            @Html.ActionLink("Events & Parties", "Welcome", "HomemadeEats")
-                            @Html.ActionLink("My Cookbook", "Welcome", "HomemadeEats")
+                            @Html.ActionLink("My Favs", "Initialization", "Account")
+                            @Html.ActionLink("My Circle", "Initialization", "Account")
+                            @Html.ActionLink("Events & Parties", "Initialization", "Account")
+                            @Html.ActionLink("My Cookbook", "Initialization", "Account")
                         </div>
                     </li>
 
-                    <li>@Html.ActionLink("My Page", "Welcome", "HomemadeEats")</li>
+                    <li>@Html.ActionLink("My Page", "Initialization", "Account")</li>
 
                 </ul>
                 @Html.Partial("_LoginPartial");

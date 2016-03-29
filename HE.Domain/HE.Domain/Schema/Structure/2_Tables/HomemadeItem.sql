@@ -10,7 +10,7 @@ CREATE TABLE [dbo].[HomemadeItem](
 	[CustomerProfileID] [int] NOT NULL,
 	[MealTypeID] [int] NOT NULL,
 	[Name] [nvarchar](100) NOT NULL,
-	[ImageTitle] [nvarchar](150) NULL,
+	[ImageTitle] [nvarchar](256) NULL,
 	[ImageFilePath] [nvarchar](256) NULL,
 	[DidCook] [bit] NULL,
 	[IsFav] [bit] NULL,

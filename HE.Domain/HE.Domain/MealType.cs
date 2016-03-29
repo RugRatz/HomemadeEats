@@ -14,7 +14,13 @@ namespace HE.Domain
         [Display(Name = "Meal Type")]
         public string Name { get; set; }
 
-        [StringLength(256, ErrorMessage = "Maximum of 250 characters.")]
+        [StringLength(256, ErrorMessage = "Maximum of 256 characters.")]
+        [Display(Name = "Meal Type Image",
+        Prompt = "Add an image for your meal type (PNG, JPEG/JPG only)",
+        Description = "Meal Type Image")]
+        public string ImageTitle { get; set; }
+
+        [StringLength(256, ErrorMessage = "Maximum of 256 characters.")]
         [Display(Name = "Meal Type File Location", Prompt = "Add an image for your meal type (PNG, JPEG/JPG only)")]
         public string ImageFilePath { get; set; }
 

@@ -48,7 +48,7 @@ namespace HE.WebApp.UserInterface
             }
         }
 
-        public async Task<List<MealTypesViewModel>> GetAsync(string action, string authToken = null)
+        public async Task<List<MealTypesViewModel>> GetMealTypesViewModelAsync(string action, string authToken = null)
         {
             using (var client = new HttpClient())
             {

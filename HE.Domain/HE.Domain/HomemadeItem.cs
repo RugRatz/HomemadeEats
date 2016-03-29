@@ -28,13 +28,13 @@ namespace HE.Domain
             Description = "Homemade Recipe Title")]
         public string Name { get; set; }
 
-        [StringLength(150, ErrorMessage = "Maximum of 150 characters.")]
+        [StringLength(256, ErrorMessage = "Maximum of 256 characters.")]
         [Display(Name = "Homemade Recipe Image",
             Prompt = "Add an image for your homemade recipe (PNG, JPEG/JPG only)",
             Description = "Homemade Recipe Image")]
         public string ImageTitle { get; set; }
 
-        [StringLength(256, ErrorMessage = "Maximum of 250 characters.")]
+        [StringLength(256, ErrorMessage = "Maximum of 256 characters.")]
         [Display(Name = "Homemade Recipe File Location", Prompt = "Add an image for your homemade recipe (PNG, JPEG/JPG only)")]
         public string ImageFilePath { get; set; }
 

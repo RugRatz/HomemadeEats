@@ -10,25 +10,77 @@ using System.Web.Mvc;
 using HE.API.DbContexts;
 using HE.API.Models;
 using HE.WebApp.UserInterface.Models;
+using System.IO;
 
 namespace HE.WebApp.UserInterface.Controllers
 {
     public class HomemadeEatsController : Controller
     {
-        // GET: MealTypesModels
-        public async Task<ActionResult> Welcome()
+        public async Task<MealTypesViewList> GetMealTypesList()
         {
             var mealTypesList = new MealTypesViewList();
-            mealTypesList.MealTypesItemList = await WebApiService.Instance.GetAsync("api/MealTypes");
+            mealTypesList.MealTypesItemList = await WebApiService.Instance.GetMealTypesViewModelAsync("api/MealTypes");
 
+            return mealTypesList;
+        }
+
+        // GET: HomemadeEats/Welcome
+        public async Task<ActionResult> Welcome()
+        {
             // In order to send data to the view file (cshtml file), 
             // you must send in the object that contains the data 
             // AND from within the cshtml file, add the statement to include the object you need to access like
             // @model HE.WebApp.UserInterface.Models.MealTypesViewList
 
             // Pass in the list to the view like so
-            return View("Welcome", mealTypesList);
+            return View("Welcome", await GetMealTypesList());
         }
+
+        public ActionResult CreateMealTypeModalDialog()
+        {
+            return View();
+        }
+
+        // GET: HomemadeEats/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: MealTypesModels/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(MealTypesViewModel mealTypesViewModel, HttpPostedFileBase uploadedFile)
+        {
+            if (ModelState.IsValid)
+            {
+                if (uploadedFile != null && uploadedFile.ContentLength > 0)
+                {
+                    mealTypesViewModel.ImageTitle = User.Identity.Name + "_" + Guid.NewGuid().ToString() + "_" + Path.GetFileName(uploadedFile.FileName);
+                    mealTypesViewModel.ImageFilePath = "/Content/Images/Uploads/" + mealTypesViewModel.ImageTitle;
+                    uploadedFile.SaveAs(Path.Combine(Server.MapPath("~/Content/Images/Uploads"), mealTypesViewModel.ImageTitle));
+                }
+
+                mealTypesViewModel.IsSystemDefault = false;
+                mealTypesViewModel.LastUpdatedUTC = DateTime.UtcNow;
+                mealTypesViewModel.DateCreatedUTC = DateTime.UtcNow;
+
+                var result = await WebApiService.Instance.PostAsync("api/MealTypes", mealTypesViewModel);
+
+                // If API successfully inserted the new record, display the Welcome screen. 
+                // Otherwise send the user back to the Create screen again
+                if(result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Welcome", "HomemadeEats");
+                }
+                // return View("Create");   // seems redundant here?
+            }
+            return View("Create");
+        }
+
+
 
         #region GET: MealTypesModels/Details/5
         //// GET: MealTypesModels/Details/5
@@ -46,7 +98,7 @@ namespace HE.WebApp.UserInterface.Controllers
         //    return View(mealTypesModel);
         //}
         #endregion
-            
+
         //// GET: MealTypesModels/Create
         //public ActionResult Create()
         //{
@@ -54,22 +106,7 @@ namespace HE.WebApp.UserInterface.Controllers
         //}
 
 
-        //// POST: MealTypesModels/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> Create([Bind(Include = "MealTypeID,Name,IsSystemDefault,DateCreatedUTC,LastUpdatedUTC")] MealTypesModel mealTypesModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.MealTypesModels.Add(mealTypesModel);
-        //        await db.SaveChangesAsync();
-        //        return RedirectToAction("Index");
-        //    }
 
-        //    return View(mealTypesModel);
-        //}
 
         #region GET: MealTypesModels/Edit/5
         //// GET: MealTypesModels/Edit/5

@@ -2,12 +2,32 @@
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace HE.API.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class CustomerProfile : IdentityUser
     {
+        [StringLength(50)]
+        public string FirstName { get; set; }
+
+        [StringLength(50)]
+        public string LastName { get; set; }
+        
+        public bool? IsActive { get; set; }
+
+        [StringLength(256)]
+        public string AvatarTitle { get; set; }
+
+        [StringLength(256)]
+        public string AvatarFilePath { get; set; }
+        
+        public DateTime? DateCreatedUTC { get; set; }
+        
+        public DateTime? LastUpdatedUTC { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<CustomerProfile> manager, string authenticationType)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

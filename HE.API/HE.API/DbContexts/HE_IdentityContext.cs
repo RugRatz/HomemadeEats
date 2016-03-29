@@ -2,8 +2,8 @@ namespace HE.API.DbContexts
 {
     using Microsoft.AspNet.Identity.EntityFramework;
     using System.Data.Entity;
-    using HE.API.Models;
-    using HE.Domain;
+    using Models;
+    using Domain;
 
     public partial class HE_IdentityDbContext : IdentityDbContext<CustomerProfile>
     {
@@ -45,16 +45,15 @@ namespace HE.API.DbContexts
             ////Customize IdentityUser for Homemade Eats DB - Define the mappings
 
             //this is DEFININTELY NEEDED
-
-            modelBuilder.Entity<IdentityUser>().ToTable("CustomerProfile");
-
             modelBuilder.Entity<CustomerProfile>().Property(p => p.Id).HasColumnName("CustomerProfileID");
             modelBuilder.Entity<CustomerProfile>().Property(p => p.LockoutEndDateUtc).HasColumnName("LockoutEndDateUTC");
             modelBuilder.Entity<CustomerProfile>().Property(p => p.Email).HasColumnName("EmailAddress");
             modelBuilder.Entity<CustomerProfile>().Property(p => p.PhoneNumber).HasMaxLength(50);
             modelBuilder.Entity<CustomerProfile>().Property(p => p.EmailConfirmed).HasColumnName("EmailAddressConfirmed");
             modelBuilder.Entity<CustomerProfile>().Property(p => p.TwoFactorEnabled).HasColumnName("TwoFactorAuthEnabled");
-            modelBuilder.Entity<CustomerProfile>().Property(p => p.UserName).HasMaxLength(50);
+            modelBuilder.Entity<CustomerProfile>().Property(p => p.UserName).HasMaxLength(256);
+            modelBuilder.Entity<CustomerProfile>().ToTable("CustomerProfile");
+            // To rename the IdentityUser database table (dbo.AspNetUser), you use the above line
 
             ////may not have a need for the table IdentityUserRole since Homemade Eats should give the owner full priviledges?
             ////will keep this just in case I find a need for it in the future

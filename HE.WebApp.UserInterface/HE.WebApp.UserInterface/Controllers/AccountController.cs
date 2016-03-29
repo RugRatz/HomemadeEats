@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using HE.WebApp.UserInterface.Models;
 using HE.API.Models;
+using System.Net.Http;
 
 namespace HE.WebApp.UserInterface.Controllers
 {
@@ -53,25 +54,67 @@ namespace HE.WebApp.UserInterface.Controllers
             }
         }
 
+        public async Task<bool> UserHasCreatedMealTypes()
+        {
+            var mealTypesList = new MealTypesViewList();
+            mealTypesList.MealTypesItemList = await WebApiService.Instance.GetMealTypesViewModelAsync("api/MealTypes");
+            
+            if(mealTypesList.MealTypesItemList != null && mealTypesList.MealTypesItemList.Count() > 0)
+                return true;
+
+            return false;
+        }
+        
+        public bool UserIsAuthenticated()
+        {
+            if (Request.IsAuthenticated && User.Identity.GetUserName() != null)
+                return true;
+            return false;
+        }
+
+        //
+        // GET: /Account/Initialization
+        [AllowAnonymous]
+        public async Task<ActionResult> Initialization(string returnUrl)
+        {
+            var currentUserInDb = UserManager.FindByEmail(User.Identity.GetUserName());
+
+            // Added this to handle the case when the user reopens tab
+            // and is still logged (top right reads Hello Lisa!)
+            // but the screen that shows is the Signin screen instead of the Welcome screen
+            // UserIsAuthenticated() checks user status on the application cookie
+            // currentuserInDb checks if the user exists on the database - if this is null, 
+            // either the Db has not been created yet or the user doesn't exist in the Db yet
+            if (UserIsAuthenticated() && currentUserInDb != null)
+            {
+                bool test = await UserHasCreatedMealTypes();
+                if (test)
+                    return RedirectToAction("Welcome", "HomemadeEats");
+
+                return RedirectToAction("Create", "HomemadeEats");
+            }
+
+            // At this point, the user does not exist in the database but exists in the cookie
+            if (Request.IsAuthenticated)
+            {
+                // Invalidate the application cookie so that we can start fresh
+                SignInManager.AuthenticationManager.SignOut();
+            }
+            return RedirectToAction("Signin","Account");
+        }
+
         /// <summary>
         /// Signin is hit upon startup and this is configured through
         /// RouteConfig.cs
         /// </summary>
         /// <param name="returnUrl"></param>
         /// <returns></returns>
-        //
-        // GET: /Account/Login
+            //
+            // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Signin(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            
-            // Added this to handle the case when the user reopens tab
-            // and is still logged (top right reads Hello Lisa!)
-            // but the screen that shows is the Signin screen instead of the Welcome screen
-            if (Request.IsAuthenticated && User.Identity.GetUserName() != null)
-                return RedirectToAction("Welcome", "HomemadeEats");
-
             return View();
         }
 
@@ -179,7 +222,7 @@ namespace HE.WebApp.UserInterface.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                        return RedirectToAction("Welcome", "HomemadeEats");
+                        return RedirectToAction("Initialization", "Account");
                 }
                 AddErrors(result);
             }
@@ -465,8 +508,10 @@ namespace HE.WebApp.UserInterface.Controllers
             {
                 return Redirect(returnUrl);
             }
+
             //return RedirectToAction("Signin", "Account");
-            return RedirectToAction("Welcome", "HomemadeEats");
+            //return RedirectToAction("Welcome", "HomemadeEats");
+            return RedirectToAction("Initialization", "Account");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

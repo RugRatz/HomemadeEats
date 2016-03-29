@@ -7,7 +7,7 @@ SET QUOTED_IDENTIFIER ON
 
 CREATE TABLE [dbo].[CustomerContactInfo](
 	[CustomerContactInfoID] [int] IDENTITY(1,1) NOT NULL,
-	[CustomerProfileID] [nvarchar](128) NOT NULL,
+	[CustomerProfileID] [nvarchar](max) NOT NULL,
 	[IsActive] [bit] NULL,
 	[Street] [nvarchar](40) NULL,
 	[City] [nvarchar](20) NULL,

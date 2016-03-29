@@ -1,13 +1,13 @@
 USE HomemadeEats
 
-ALTER TABLE [dbo].[CustomerLogin]  
-	WITH CHECK ADD  
-	CONSTRAINT [FK_dbo.CustomerLogin_dbo.CustomerProfile_CustomerProfileID] 
-	FOREIGN KEY([CustomerProfileID])
-	REFERENCES [dbo].[CustomerProfile] ([CustomerProfileID])
-	ON DELETE CASCADE
-ALTER TABLE [dbo].[CustomerLogin] 
-	CHECK CONSTRAINT [FK_dbo.CustomerLogin_dbo.CustomerProfile_CustomerProfileID]
+--ALTER TABLE [dbo].[CustomerLogin]  
+--	WITH CHECK ADD  
+--	CONSTRAINT [FK_dbo.CustomerLogin_dbo.CustomerProfile_CustomerProfileID] 
+--	FOREIGN KEY([CustomerProfileID])
+--	REFERENCES [dbo].[CustomerProfile] ([CustomerProfileID])
+--	ON DELETE CASCADE
+--ALTER TABLE [dbo].[CustomerLogin] 
+--	CHECK CONSTRAINT [FK_dbo.CustomerLogin_dbo.CustomerProfile_CustomerProfileID]
 
 
 ALTER TABLE [dbo].[Grocery]  

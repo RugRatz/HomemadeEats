@@ -21,11 +21,11 @@ USE HomemadeEats
 BEGIN
 	/* I don't think SSMS generated the script for creating the indexes for the tables so I'm keeping these */
     --CREATE INDEX [IX_CustomerProfile_Id] ON [dbo].[CustomerContactInfo]([CustomerProfile_Id])
-    CREATE UNIQUE INDEX [UserNameIndex] ON [dbo].[CustomerProfile]([UserName])
-    CREATE INDEX [IX_CustomerProfileID] ON [dbo].[UserClaim]([CustomerProfileID])
-    CREATE INDEX [IX_CustomerProfileID] ON [dbo].[CustomerLogin]([CustomerProfileID])
-    CREATE INDEX [IX_CustomerProfileID] ON [dbo].[UserRole]([CustomerProfileID])
-    CREATE INDEX [IX_RoleId] ON [dbo].[UserRole]([RoleId])
+    --CREATE UNIQUE INDEX [UserNameIndex] ON [dbo].[CustomerProfile]([UserName])
+    --CREATE INDEX [IX_CustomerProfileID] ON [dbo].[UserClaim]([CustomerProfileID])
+    --CREATE INDEX [IX_CustomerProfileID] ON [dbo].[CustomerLogin]([CustomerProfileID])
+    --CREATE INDEX [IX_CustomerProfileID] ON [dbo].[UserRole]([CustomerProfileID])
+    --CREATE INDEX [IX_RoleId] ON [dbo].[UserRole]([RoleId])
     CREATE INDEX [IX_HomemadeItemID] ON [dbo].[Grocery]([HomemadeItemID])
     CREATE INDEX [IX_GroceryGroupID] ON [dbo].[GroceryGroupIngredient]([GroceryGroupID])
     CREATE INDEX [IX_IngredientID] ON [dbo].[GroceryGroupIngredient]([IngredientID])

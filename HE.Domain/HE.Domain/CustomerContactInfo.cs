@@ -10,6 +10,7 @@ namespace HE.Domain
         [Key]
         public int CustomerContactInfoID { get; set; }
 
+        [StringLength(128)]
         public string CustomerProfileID { get; set; }
 
         public bool? IsActive { get; set; }

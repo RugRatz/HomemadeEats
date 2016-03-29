@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using Microsoft.AspNet.Identity;
+using System.Security.Claims;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Optimization;

@@ -13,7 +13,7 @@ body {
 }
 
 .bodyHE {
-    background: url(Images/board.jpg) no-repeat center center fixed;
+    background: url(Images/woodtexture8.jpg) no-repeat center center fixed;
     background-size: cover; /* causes image to be full size of the screen */
     height: 100%;
     margin: 0;
@@ -165,7 +165,8 @@ li a:hover, .dropdown:hover .dropbtn {
     display: block;
 }
 
-/*ul {
+/*
+ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -189,3 +190,61 @@ li.dropdown {
     display: inline-block;
 }*/
 /* END */
+
+
+/* Modal Styling from W3 
+    http://www.w3schools.com/bootstrap/bootstrap_ref_js_modal.asp
+*/
+.modal-header, h4, .close {
+    background-color: #5cb85c;
+    color:white !important;
+    text-align: center;
+    font-size: 30px;
+}
+.modal-footer {
+    background-color: #f9f9f9;
+}
+/* END */
+
+
+/* File input type (for file upload) 
+    http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/
+*/
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  background: red;
+  cursor: inherit;
+  display: block;
+}
+input[readonly] {
+  background-color: white !important;
+  cursor: text !important;
+}
+/* END */
+
+
+/* Homemade Eats Styling */
+.calligraphic-font{
+    font-family:"lucida calligraphy";
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.btn-default:hover {
+    /*background: green;*/
+    /*color: white;*/   /* this is the text color for the text on the button*/
+}
+/* END */
+

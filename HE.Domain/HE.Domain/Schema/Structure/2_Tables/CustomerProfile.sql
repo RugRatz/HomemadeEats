@@ -10,7 +10,7 @@ CREATE TABLE [dbo].[CustomerProfile](
 	[FirstName] [nvarchar](50) NOT NULL,
 	[LastName] [nvarchar](50) NOT NULL,
 	[IsActive] [bit] NOT NULL,
-	[AvatarTitle] [nvarchar](150) NULL,
+	[AvatarTitle] [nvarchar](256) NULL,
 	[AvatarFilePath] [nvarchar](256) NULL,
 	[DateCreatedUtc] [datetime] NULL,
 	[LastUpdatedUtc] [datetime] NULL,
