@@ -23,8 +23,12 @@ namespace HE.WebApp.UserInterface.Controllers
 
             return mealTypesList;
         }
-
-        // GET: HomemadeEats/Welcome
+        
+        /// <summary>
+        /// GET: HomemadeEats/Welcome
+        /// Maps to Welcome.cshtml
+        /// </summary>
+        /// <returns></returns>
         public async Task<ActionResult> Welcome()
         {
             // In order to send data to the view file (cshtml file), 
@@ -32,14 +36,28 @@ namespace HE.WebApp.UserInterface.Controllers
             // AND from within the cshtml file, add the statement to include the object you need to access like
             // @model HE.WebApp.UserInterface.Models.MealTypesViewList
 
-            // Pass in the list to the view like so
-            return View("Welcome", await GetMealTypesList());
+            var mealTypeModel = new MealTypeModels();
+            mealTypeModel.mealTypeViewList = await GetMealTypesList();
+
+            return View("Welcome", mealTypeModel);
         }
 
-        public ActionResult CreateMealTypeModalDialog()
-        {
-            return View();
-        }
+        //public async Task<PartialViewResult> PartialMealTypeList()
+        //{
+        //    // In order to send data to the view file (cshtml file), 
+        //    // you must send in the object that contains the data 
+        //    // AND from within the cshtml file, add the statement to include the object you need to access like
+        //    // @model HE.WebApp.UserInterface.Models.MealTypesViewList
+
+        //    var model = await GetMealTypesList();
+        //    // Pass in the list to the view like so
+        //    return PartialView("_PartialMealTypeList", model);
+        //}
+
+        //public PartialViewResult PartialFormModal_CreateMealTypeDialog()
+        //{
+        //    return PartialView("_PartialFormModal_CreateMealTypeDialog", new MealTypesViewModel());
+        //}
 
         // GET: HomemadeEats/Create
         public ActionResult Create()
@@ -52,22 +70,22 @@ namespace HE.WebApp.UserInterface.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(MealTypesViewModel mealTypesViewModel, HttpPostedFileBase uploadedFile)
+        public async Task<ActionResult> Create(MealTypeModels mealTypesModels, HttpPostedFileBase uploadedFile)
         {
             if (ModelState.IsValid)
             {
                 if (uploadedFile != null && uploadedFile.ContentLength > 0)
                 {
-                    mealTypesViewModel.ImageTitle = User.Identity.Name + "_" + Guid.NewGuid().ToString() + "_" + Path.GetFileName(uploadedFile.FileName);
-                    mealTypesViewModel.ImageFilePath = "/Content/Images/Uploads/" + mealTypesViewModel.ImageTitle;
-                    uploadedFile.SaveAs(Path.Combine(Server.MapPath("~/Content/Images/Uploads"), mealTypesViewModel.ImageTitle));
+                    mealTypesModels.mealTypeViewModel.ImageTitle = User.Identity.Name + "_" + Guid.NewGuid().ToString() + "_" + Path.GetFileName(uploadedFile.FileName);
+                    mealTypesModels.mealTypeViewModel.ImageFilePath = "/Content/Images/Uploads/" + mealTypesModels.mealTypeViewModel.ImageTitle;
+                    uploadedFile.SaveAs(Path.Combine(Server.MapPath("~/Content/Images/Uploads"), mealTypesModels.mealTypeViewModel.ImageTitle));
                 }
 
-                mealTypesViewModel.IsSystemDefault = false;
-                mealTypesViewModel.LastUpdatedUTC = DateTime.UtcNow;
-                mealTypesViewModel.DateCreatedUTC = DateTime.UtcNow;
+                mealTypesModels.mealTypeViewModel.IsSystemDefault = false;
+                mealTypesModels.mealTypeViewModel.LastUpdatedUTC = DateTime.UtcNow;
+                mealTypesModels.mealTypeViewModel.DateCreatedUTC = DateTime.UtcNow;
 
-                var result = await WebApiService.Instance.PostAsync("api/MealTypes", mealTypesViewModel);
+                var result = await WebApiService.Instance.PostAsync("api/MealTypes", mealTypesModels.mealTypeViewModel);
 
                 // If API successfully inserted the new record, display the Welcome screen. 
                 // Otherwise send the user back to the Create screen again

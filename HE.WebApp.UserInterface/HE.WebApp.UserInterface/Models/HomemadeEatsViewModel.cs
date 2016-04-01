@@ -4,6 +4,12 @@ using System.Collections.Generic;
 
 namespace HE.WebApp.UserInterface.Models
 {
+    public class MealTypeModels
+    {
+        public MealTypesViewModel mealTypeViewModel { get; set; }
+        public MealTypesViewList mealTypeViewList { get; set; }
+    }
+
     public class MealTypesViewModel
     {
         public int MealTypeID { get; set; }

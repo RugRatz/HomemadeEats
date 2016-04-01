@@ -1,4 +1,4 @@
-﻿@model HE.WebApp.UserInterface.Models.MealTypesViewList
+﻿@model HE.WebApp.UserInterface.Models.MealTypeModels
 @{
     ViewBag.Title = "Welcome";
     Layout = "~/Views/Shared/_HomemadeEatsLayout.cshtml";
@@ -16,10 +16,10 @@
         @*<div class="row text-center">*@
         @{ 
             // If there are existing meal types in the DB, loop through the list to display it on the screen
-            if (Model.MealTypesItemList.Count() > 0)
+            if (Model.mealTypeViewList.MealTypesItemList.Count() > 0)
             {
                 var imgSrc = "";
-                foreach (var mealType in Model.MealTypesItemList)
+                foreach (var mealType in Model.mealTypeViewList.MealTypesItemList)
                 {
                     var name = mealType.Name;
                     if (mealType.ImageFilePath != null)
