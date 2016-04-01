@@ -1,0 +1,24 @@
+﻿@*
+    This file puts together a modal dialog by:
+    - using JS file to add html attributes to the "a" tag
+    - using another layout file that forms the GENERAL html outline for a modal dialog
+    - referencing a partial cshtml file that renders the html body for the 
+    previously mentioned modal dialog
+*@
+@using Forloop.HtmlHelpers
+@using (Html.BeginScriptContext())
+{
+    // This JS file sets the modal data-backdrop to static, data-toggle to modal
+    Html.AddScriptFile("~/Scripts/Views/Modal_CreateMealTypeDialog.js");
+}
+@{
+    // Pull in layout html for the modal dialog & insert the html here
+    Layout = "~/Views/Shared/_LayoutModal_General.cshtml";
+
+    ViewBag.ModalTitle = "Create";  // This text will show up on the Header of the modal dialog
+    ViewBag.ModalId = "CreateMealTypeModalDialog";  // This is the ID of the modal dialog
+}
+
+@* This part makes the Body of the modal dialog which is the Form part of the modal dialog *@ 
+@Html.Partial("_PartialFormModal_CreateMealTypeDialog")
+

@@ -10,6 +10,21 @@
 </head>
 
 <body class="bodyHE">
+    @if (Request.IsAuthenticated)
+    {
+        var controller = ViewContext.RouteData.GetRequiredString("controller");
+        var action = ViewContext.RouteData.GetRequiredString("action");
+
+        // Do Not render the modal html if we are on the Manage screens
+        // We know that we are on the Manage screens if the controller is the Manage controller
+        if (controller != "Manage")
+        {
+            @Html.Partial("_Modal_CreateMealTypeDialog")
+        }
+
+    }
+
+    <!-- Top Navigation Bar -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -54,17 +69,36 @@
             </div>
         </div>
     </nav>
-    <div class="container body-content">
+    <!-- End Top Navigation Bar -->
+    
+    <!-- Body -->
+    <div class="w3-container">
         @RenderBody()
+
+        <div class="w3-container he-floatingBtn" id="divForCreateMealTypeFloatingBtn">
+            @*<a class="w3-btn-floating-large glyphicon glyphicon-plus" href="@Url.Action("Create", "HomemadeEats")"></a>*@
+            @Html.ActionLink("+", "Create", "HomemadeEats", routeValues: null, htmlAttributes: new { @class = "w3-btn-floating-large glyphicon he-floatingBtn", @Id = "createMealTypeLinkBtn"})
+        </div>
+
+        <!-- Footer -->
         <div class="container-fluid text-center">
             <hr />
             <p>&copy;Homemade Eats @DateTime.Now.Year</p>
         </div>
+
+        @*<footer class="w3-container text-center">
+            <hr />
+            <p>&copy;Homemade Eats @DateTime.Now.Year</p>
+        </footer>*@
+        <!-- End Footer -->
+
     </div>
+    <!-- End Body -->
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
     @RenderSection("scripts", required: false)
-
+    @Html.RenderScripts()
 </body>
 </html>

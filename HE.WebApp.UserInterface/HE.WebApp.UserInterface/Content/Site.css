@@ -1,8 +1,8 @@
-﻿footer {
+﻿/*footer {
    position:absolute;
    bottom:0;
    /*width: 90%;*/
-}
+/*}*/
 
 body {
     background: url(images/roots.jpg) no-repeat center center fixed;
@@ -19,6 +19,24 @@ body {
     margin: 0;
     padding: 0;
 }
+
+.he-floatingBtn {
+    position: fixed;    
+    top: 70px;
+	right: 50px;
+    /*bottom: 0;
+    right: 0;
+    padding-right: 50px;
+    padding-bottom: 50px;
+	cursor: pointer;
+    width: 300px;
+    border: 3px solid #73AD21;*/
+}
+
+.he-floatingBtn a:hover{
+    text-decoration: none;
+}
+
 
 /*html, body {
     background: url(images/roots.jpg) no-repeat center center fixed;
@@ -83,50 +101,6 @@ a {
     margin-bottom: 10px;
 }
 
-/*not used*/
-.thumbnailsBreakfastImg {
-    /*position: absolute;*/
-    /*top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;*/
-    background-image: url(Images/omlete.jpg);
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
-/*not used*/
-.thumbnailStyling {
-    /*width:250px;*/
-    /*border:2px black solid;
-    margin:auto;*/
-    /*position: relative;*/
-    /*overflow: auto;*/
-    
-    box-shadow: 5px 0px 40px black; /*rgba(0,0,0, .2);*/
-}
-
-/*not used*/
-.imgStyle {
-    height: 200px;
-}
-
-/*not used*/
-#img_container {
-    position:relative;
-    display:inline-block;
-    text-align:center;
-    border:1px solid red;
-}
-
-/*not used*/
-.buttonOverlay {
-    position:absolute;
-    bottom:10px;
-    right:10px;
-    width:100%;
-    height:100%;
-}
 
 .divStyle {
     margin-bottom: 50px;
@@ -245,6 +219,10 @@ input[readonly] {
 .btn-default:hover {
     /*background: green;*/
     /*color: white;*/   /* this is the text color for the text on the button*/
+}
+
+.he-floating-btn-visited {
+    text-decoration: none;
 }
 /* END */
 

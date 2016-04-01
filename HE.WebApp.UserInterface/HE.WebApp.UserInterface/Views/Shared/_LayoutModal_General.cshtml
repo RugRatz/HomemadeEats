@@ -1,0 +1,33 @@
+﻿@*http://www.codeproject.com/Articles/993087/Use-Twitter-Bootstrap-Modal-Dialog-for-Smoother-Lo*@
+@* Layout Page for Twitter Bootstrap Modal Dialogs *@
+
+
+<!-- Modal -->
+<div class="modal fade" id="@ViewBag.ModalId" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="padding:35px 50px;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                
+                <h4 class="modal-title" id="@ViewBag.ModalId">
+                    @ViewBag.ModalTitle
+                </h4>
+            </div>
+
+            <div class="modal-body" style="padding:40px 50px;">
+                @RenderBody()
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal">
+                <span class="glyphicon glyphicon-remove"></span>
+                 Cancel</button>
+            </div>
+        </div>
+        <!-- End Modal content -->
+
+    </div>
+</div>
+<!-- End Modal -->

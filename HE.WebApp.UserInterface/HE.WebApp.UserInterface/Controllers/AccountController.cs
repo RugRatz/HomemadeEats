@@ -75,7 +75,7 @@ namespace HE.WebApp.UserInterface.Controllers
         //
         // GET: /Account/Initialization
         [AllowAnonymous]
-        public async Task<ActionResult> Initialization(string returnUrl)
+        public ActionResult Initialization(string returnUrl)
         {
             var currentUserInDb = UserManager.FindByEmail(User.Identity.GetUserName());
 
@@ -87,11 +87,12 @@ namespace HE.WebApp.UserInterface.Controllers
             // either the Db has not been created yet or the user doesn't exist in the Db yet
             if (UserIsAuthenticated() && currentUserInDb != null)
             {
-                bool test = await UserHasCreatedMealTypes();
-                if (test)
-                    return RedirectToAction("Welcome", "HomemadeEats");
+                //bool test = await UserHasCreatedMealTypes();
+                //if (test)
+                //    return RedirectToAction("Welcome", "HomemadeEats");
 
-                return RedirectToAction("Create", "HomemadeEats");
+                return RedirectToAction("Welcome", "HomemadeEats");
+                //return RedirectToAction("Create", "HomemadeEats");
             }
 
             // At this point, the user does not exist in the database but exists in the cookie
