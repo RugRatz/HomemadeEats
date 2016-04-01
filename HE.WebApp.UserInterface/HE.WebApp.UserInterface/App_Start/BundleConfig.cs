@@ -1,4 +1,5 @@
-﻿using System.Web.Optimization;
+﻿using Forloop.HtmlHelpers;
+using System.Web.Optimization;
 
 namespace HE.WebApp.UserInterface
 {
@@ -22,9 +23,15 @@ namespace HE.WebApp.UserInterface
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            //bundles.Add(new ScriptBundle("~/bundles/Modal_CreateMealTypeDialog").Include(
+            //            "~/Scripts/Views/Modal_CreateMealTypeDialog.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/w3.css"));
+
+            ScriptContext.ScriptPathResolver = Scripts.Render;
         }
     }
 }
