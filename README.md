@@ -56,6 +56,7 @@ If you download this project, here is what will help you get through the issue w
 <br/>
 <br/>
 <br/>
+
 <b>4)</b> Once steps 1-3 are successfully done, you should be able to successfully <b>RUN</b> this app on a browser (IE, Firefox, Chrome).
 <br/>
 <br/>
