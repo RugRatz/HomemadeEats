@@ -1,9 +1,11 @@
 # HomemadeEats
 <b>First try</b> in creating an <b>MVC5 ASP.NET</b> app with <b>Bootstrap</b> and <b>W3.CSS</b>
 
-
+<br/>
+<br/>
 Project for a cooking app
-
+<br/>
+<br/>
 
 <b>INSTRUCTIONS:</b>
 
