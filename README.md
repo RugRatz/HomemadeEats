@@ -4,7 +4,7 @@ First try in creating an MVC5 ASP.NET app with Bootstrap and W3.CSS
 Project for a cooking app
 
 
-INSTRUCTIONS:
+<b>INSTRUCTIONS:<b>
 
 If you download this project, here is what will help you get through the issue with the packages.
 
