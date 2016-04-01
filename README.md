@@ -13,10 +13,12 @@ If you download this project, here is what will help you get through the issue w
 
 <b>1)</b> Open the solution file for the Domain project first (HE.Domain.sln).  
 [<b>NOTES:</b> 
-* This project contains the database <b>TABLE DEFINITIONS</b> and <b>CLASSES</b> for the HomemadeEats project.  
-* These tables are custom designed tables specific to HomemadeEats app.  
-* The tables are needed by the HomemadeEats app. 
-* Due to Katana and ASP.NET Identity (v2.0) and its design, customizations and definitions to Identity tables were kept/left alone and done at the MVC project level (ie where Identity is employed - HE.API.sln and HE.WebApp.UserInterface - it WAS very difficult and time consuming to separate out (not decouple) the Katana and Identity stuff)]
+  * This project contains the database <b>TABLE DEFINITIONS</b> and <b>CLASSES</b> for the HomemadeEats project.  
+  * These tables are custom designed tables specific to HomemadeEats app.  
+  * The tables are needed by the HomemadeEats app. 
+  * Due to Katana and ASP.NET Identity (v2.0) and its design, customizations and definitions to Identity tables were kept/left alone and done at the MVC project level (ie where Identity is employed - HE.API.sln and HE.WebApp.UserInterface - it WAS very difficult and time consuming to separate out (not decouple) the Katana and Identity stuff)
+<br/>
+]
 
 - Build > Clean solution 
 - Build > Rebuild solution (this should trigger a Restore of the referenced packages for this project).  If doing this is <b>STILL NOT SUFFICIENT</b> to get rid of the errors, then go to Package Manager and after it loads, type in "Update-Package" (without the double quotes to be clear).  Doing this should update all the referenced packages a second time.  This should clear out the yellow warning triangles on the referenced package that you see in Solution Explorer > References.  At this point, I would suggest you go ahead and do <b>ANOTHER</b> clean (Build > Clean solution), then <b>ANOTHER</b> rebuild (Build > Rebuild solution).  This should clear any errors that were previously there.  I've only had to follow these steps to get through the issues I've experienced downloading this project.  If you continue having issues with referenced packages, I would suggest go over the steps another time and possibly even closing Visual Studio after you do a clean and then reopen the project solution, clean, rebuild.  Once you managed to get through the errors, you can close this solution now (ie close out visual studio).
