@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Homemade Eats</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @*<script src="https://apis.google.com/js/platform.js" async defer></script>*@
+</head>
+
+<body class="bodyHE">
+    @if (Request.IsAuthenticated)
+    {
+        var test = ViewContext.RouteData.GetRequiredString("controller");
+        var test2 = ViewContext.RouteData.GetRequiredString("action");
+        @Html.Partial("_Modal_CreateMealTypeDialog")
+        
+    }
+
+    <!-- Top Navigation Bar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Homemade Eats", "Initialization", "Account", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle dropbtn" data-toggle="dropdown" href="@Url.Action("Welcome", "HomemadeEats")">
+                        Menu
+                        <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-content dropdown-menu">
+                            @Html.ActionLink("Weekly", "Initialization", "Account")
+                            @Html.ActionLink("Groceries", "Initialization", "Account")
+                        </div>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle dropbtn" data-toggle="dropdown" href="@Url.Action("Initialization", "Account")">
+                            Community
+                            <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-content dropdown-menu">
+                            @Html.ActionLink("My Favs", "Initialization", "Account")
+                            @Html.ActionLink("My Circle", "Initialization", "Account")
+                            @Html.ActionLink("Events & Parties", "Initialization", "Account")
+                            @Html.ActionLink("My Cookbook", "Initialization", "Account")
+                        </div>
+                    </li>
+
+                    <li>@Html.ActionLink("My Page", "Initialization", "Account")</li>
+
+                </ul>
+                @Html.Partial("_LoginPartial");
+            </div>
+        </div>
+    </nav>
+    <!-- End Top Navigation Bar -->
+    
+    <!-- Body -->
+    <div class="w3-container body-content">
+        @RenderBody()
+
+        <div class="w3-container he-floatingBtn" id="divForCreateMealTypeFloatingBtn">
+            @*<a class="w3-btn-floating-large glyphicon glyphicon-plus" href="@Url.Action("Create", "HomemadeEats")"></a>*@
+            @Html.ActionLink("+", "Create", "HomemadeEats", routeValues: null, htmlAttributes: new { @class = "w3-btn-floating-large glyphicon", @Id = "createMealTypeLinkBtn" })
+        </div>
+
+        <!-- Footer -->
+        <div class="container-fluid text-center">
+            <hr />
+            <p>&copy;Homemade Eats @DateTime.Now.Year</p>
+
+            @*<footer>
+                <hr />
+                <p>&copy;Homemade Eats @DateTime.Now.Year</p>
+            </footer>*@
+        </div>
+        <!-- End Footer -->
+
+    </div>
+    <!-- End Body -->
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("scripts", required: false)
+    @Html.RenderScripts()
+</body>
+</html>
